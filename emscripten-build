@@ -1,0 +1,7 @@
+#!/bin/bash
+
+EMHOME=/Users/chad/projects/emscripten
+EMCC=$EMHOME/em++
+
+$EMCC -Wall -O0 -I$EMHOME/tests/freetype/include -I$EMHOME/tests/freealut/include -o AstroMenace.html AstroMenaceSource/Main.cpp
+

@@ -28,7 +28,7 @@
 #ifndef CoreMath_H
 #define CoreMath_H
 
-
+#include <stdio.h>
 #include "../Base.h"
 
 
