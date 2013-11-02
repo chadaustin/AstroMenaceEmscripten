@@ -39,7 +39,7 @@
 
 // VAO OpenGL extention support switcher (if defined - game will detect and use VAO), VAO will not work without VBO
 // Intel video cards might have a problem with VAO (index buffer issue in intel video drivers)
-#define vao
+//#define vao
 
 // FBO OpenGL extention support switcher (if defined - game will detect and use FBO)
 // Note, this will also take affect on anti aliasing support.
@@ -51,7 +51,7 @@
 #endif // xinerama_detected_by_cmake
 
 // joystick support, required SDL compilled with "joystick" flag
-#define joystick
+//#define joystick
 
 // separate thread for music during data loading (based on SDL multithread implementation)
 // #define multithread

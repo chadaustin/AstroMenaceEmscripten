@@ -198,7 +198,7 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	// синхронизация для линукс и мак ос (для виндовс может не сработать, по какой-то причине не работает в wine)
-	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, VSync);
+	//SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, VSync);
 
 
 	// создаем окно

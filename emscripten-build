@@ -1,7 +1,15 @@
 #!/bin/bash
 
+set -e
+
 EMHOME=/Users/chad/projects/emscripten
-EMCC=$EMHOME/em++
+EMCC=$EMHOME/emcc
+EMPP=$EMHOME/em++
 
-$EMCC -Wall -O0 -I$EMHOME/tests/freetype/include -I$EMHOME/tests/freealut/include -o AstroMenace.html AstroMenaceSource/Main.cpp
+SOURCES=$(find AstroMenaceSource -iname '*.cpp')
+LIBOGG=$(find deps/libogg-1.3.1/src -iname '*.c')
+LIBVORBIS="deps/libvorbis-1.3.3/lib/vorbisfile.c deps/libvorbis-1.3.3/lib/info.c deps/libvorbis-1.3.3/lib/synthesis.c"
 
+$EMCC -Wall -Wno-unused-variable -O0 -o clibs.bc -Ideps/libvorbis-1.3.3/include -Ideps/libogg-1.3.1/include  $LIBOGG $LIBVORBIS
+
+$EMPP -s LEGACY_GL_EMULATION=1 -s SAFE_DYNCALLS=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -Wall -Wno-unused-variable -O0 -I$EMHOME/tests/freetype/include -I$EMHOME/tests/freealut/include -Ideps/libvorbis-1.3.3/include -Ideps/libogg-1.3.1/include -o AstroMenace.html $SOURCES clibs.bc

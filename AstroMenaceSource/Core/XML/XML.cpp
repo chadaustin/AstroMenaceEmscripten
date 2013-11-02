@@ -24,7 +24,7 @@
 
 *************************************************************************************/
 
-
+#include <stdio.h>
 #include "XML.h"
 #include "../VirtualFileSystem/VFS.h"
 
