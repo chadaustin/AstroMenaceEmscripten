@@ -31,6 +31,210 @@ LIBFREEALUT = [os.path.join('freealut', 'src', x) for x in Split("""
 """)]
 libfreealut = env.Library(['freealut'], LIBFREEALUT)
 
+env.VariantDir('freetype', '$EMHOME/tests/freetype', duplicate=0)
+
+"""
+    autofit/autofit.c
+    autofit/aflatin2.c
+
+    # mac-only
+    base/ftmac.c
+
+    # has main()
+    tools/apinames.c
+    tools/ftrandom/ftrandom.c
+    tools/test_afm.c
+    tools/test_bbox.c
+    tools/test_trig.c
+    gxvalid/gxvfgen.c
+
+    base/ftbase.c
+    bdf/bdf.c
+    cache/ftcache.c
+    cff/cff.c
+    cid/type1cid.c
+    gxvalid/gxvmod.c
+    otvalid/otvmod.c
+    pcf/pcf.c
+    pfr/pfr.c
+    psaux/psaux.c
+    pshinter/pshinter.c
+    psnames/psnames.c
+    raster/raster.c
+    sfnt/sfnt.c
+    sfnt/ttsbit0.c
+    smooth/smooth.c
+    truetype/truetype.c
+    type1/type1.c
+    type42/type42.c
+"""
+
+LIBFREETYPE = [os.path.join('freetype', 'src', x) for x in Split("""
+    autofit/afangles.c
+    autofit/afcjk.c
+    autofit/afdummy.c
+    autofit/afglobal.c
+    autofit/afhints.c
+    autofit/afindic.c
+    autofit/aflatin.c
+    autofit/afloader.c
+    autofit/afmodule.c
+    autofit/afpic.c
+    autofit/afwarp.c
+    base/basepic.c
+    base/ftadvanc.c
+    base/ftapi.c
+    base/ftbbox.c
+    base/ftbdf.c
+    base/ftbitmap.c
+    base/ftcalc.c
+    base/ftcid.c
+    base/ftdbgmem.c
+    base/ftdebug.c
+    base/ftfstype.c
+    base/ftgasp.c
+    base/ftgloadr.c
+    base/ftglyph.c
+    base/ftgxval.c
+    base/ftinit.c
+    base/ftlcdfil.c
+    base/ftmm.c
+    base/ftobjs.c
+    base/ftotval.c
+    base/ftoutln.c
+    base/ftpatent.c
+    base/ftpfr.c
+    base/ftpic.c
+    base/ftrfork.c
+    base/ftsnames.c
+    base/ftstream.c
+    base/ftstroke.c
+    base/ftsynth.c
+    base/ftsystem.c
+    base/fttrigon.c
+    base/fttype1.c
+    base/ftutil.c
+    base/ftwinfnt.c
+    base/ftxf86.c
+    bdf/bdfdrivr.c
+    bdf/bdflib.c
+    cache/ftcbasic.c
+    cache/ftccache.c
+    cache/ftccmap.c
+    cache/ftcglyph.c
+    cache/ftcimage.c
+    cache/ftcmanag.c
+    cache/ftcmru.c
+    cache/ftcsbits.c
+    cff/cffcmap.c
+    cff/cffdrivr.c
+    cff/cffgload.c
+    cff/cffload.c
+    cff/cffobjs.c
+    cff/cffparse.c
+    cff/cffpic.c
+    cid/cidgload.c
+    cid/cidload.c
+    cid/cidobjs.c
+    cid/cidparse.c
+    cid/cidriver.c
+    gxvalid/gxvalid.c
+    gxvalid/gxvbsln.c
+    gxvalid/gxvcommn.c
+    gxvalid/gxvfeat.c
+    gxvalid/gxvjust.c
+    gxvalid/gxvkern.c
+    gxvalid/gxvlcar.c
+    gxvalid/gxvmort.c
+    gxvalid/gxvmort0.c
+    gxvalid/gxvmort1.c
+    gxvalid/gxvmort2.c
+    gxvalid/gxvmort4.c
+    gxvalid/gxvmort5.c
+    gxvalid/gxvmorx.c
+    gxvalid/gxvmorx0.c
+    gxvalid/gxvmorx1.c
+    gxvalid/gxvmorx2.c
+    gxvalid/gxvmorx4.c
+    gxvalid/gxvmorx5.c
+    gxvalid/gxvopbd.c
+    gxvalid/gxvprop.c
+    gxvalid/gxvtrak.c
+    gzip/adler32.c
+    gzip/ftgzip.c
+    gzip/infblock.c
+    gzip/infcodes.c
+    gzip/inflate.c
+    gzip/inftrees.c
+    gzip/infutil.c
+    gzip/zutil.c
+    lzw/ftlzw.c
+    otvalid/otvalid.c
+    otvalid/otvbase.c
+    otvalid/otvcommn.c
+    otvalid/otvgdef.c
+    otvalid/otvgpos.c
+    otvalid/otvgsub.c
+    otvalid/otvjstf.c
+    otvalid/otvmath.c
+    pcf/pcfdrivr.c
+    pcf/pcfread.c
+    pcf/pcfutil.c
+    pfr/pfrcmap.c
+    pfr/pfrdrivr.c
+    pfr/pfrgload.c
+    pfr/pfrload.c
+    pfr/pfrobjs.c
+    pfr/pfrsbit.c
+    psaux/afmparse.c
+    psaux/psauxmod.c
+    psaux/psconv.c
+    psaux/psobjs.c
+    psaux/t1cmap.c
+    psaux/t1decode.c
+    pshinter/pshalgo.c
+    pshinter/pshglob.c
+    pshinter/pshmod.c
+    pshinter/pshpic.c
+    pshinter/pshrec.c
+    psnames/psmodule.c
+    psnames/pspic.c
+    raster/ftraster.c
+    raster/ftrend1.c
+    raster/rastpic.c
+    sfnt/sfdriver.c
+    sfnt/sfntpic.c
+    sfnt/sfobjs.c
+    sfnt/ttbdf.c
+    sfnt/ttcmap.c
+    sfnt/ttkern.c
+    sfnt/ttload.c
+    sfnt/ttmtx.c
+    sfnt/ttpost.c
+    sfnt/ttsbit.c
+    smooth/ftgrays.c
+    smooth/ftsmooth.c
+    smooth/ftspic.c
+    truetype/ttdriver.c
+    truetype/ttgload.c
+    truetype/ttgxvar.c
+    truetype/ttinterp.c
+    truetype/ttobjs.c
+    truetype/ttpic.c
+    truetype/ttpload.c
+    type1/t1afm.c
+    type1/t1driver.c
+    type1/t1gload.c
+    type1/t1load.c
+    type1/t1objs.c
+    type1/t1parse.c
+    type42/t42drivr.c
+    type42/t42objs.c
+    type42/t42parse.c
+    winfonts/winfnt.c
+""")]
+libfreetype = env.Library(['freetype'], LIBFREETYPE)
+
 SOURCES = Split("""
     AstroMenaceSource/Core/Camera/Camera.cpp
     AstroMenaceSource/Core/Camera/CameraMath.cpp
@@ -168,4 +372,4 @@ SOURCES = Split("""
     AstroMenaceSource/ScriptEngine/ScriptFunction.cpp
     AstroMenaceSource/ScriptEngine/Setup.cpp
 """)
-env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut)
+env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut + libfreetype)

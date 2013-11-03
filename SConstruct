@@ -16,6 +16,7 @@ env = Environment(
         'HAVE_STAT',
         'HAVE_USLEEP',
         'HAVE_UNISTD_H',
+        'FT2_BUILD_LIBRARY',
     ],
     CPPPATH=[
         '#/deps/libogg-1.3.1/include',
