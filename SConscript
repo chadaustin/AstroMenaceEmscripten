@@ -236,6 +236,7 @@ LIBFREETYPE = [os.path.join('freetype', 'src', x) for x in Split("""
 libfreetype = env.Library(['freetype'], LIBFREETYPE)
 
 SOURCES = Split("""
+    AstroMenaceSource/Shims.cpp
     AstroMenaceSource/Core/Camera/Camera.cpp
     AstroMenaceSource/Core/Camera/CameraMath.cpp
     AstroMenaceSource/Core/CollisionDetection/AABB.cpp
