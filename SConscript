@@ -15,6 +15,22 @@ LIBVORBIS = [os.path.join('deps', 'libvorbis-1.3.3', 'lib', x) for x in env.Spli
 
 libvorbis = env.Library(['vorbis'], LIBVORBIS)
 
+env.VariantDir('freealut', '$EMHOME/tests/freealut', duplicate=0)
+
+LIBFREEALUT = [os.path.join('freealut', 'src', x) for x in Split("""
+    alutBufferData.c
+    alutCodec.c
+    alutError.c
+    alutInit.c
+    alutInputStream.c
+    alutLoader.c
+    alutOutputStream.c
+    alutUtil.c
+    alutVersion.c
+    alutWaveform.c
+""")]
+libfreealut = env.Library(['freealut'], LIBFREEALUT)
+
 SOURCES = Split("""
     AstroMenaceSource/Core/Camera/Camera.cpp
     AstroMenaceSource/Core/Camera/CameraMath.cpp
@@ -152,4 +168,4 @@ SOURCES = Split("""
     AstroMenaceSource/ScriptEngine/ScriptFunction.cpp
     AstroMenaceSource/ScriptEngine/Setup.cpp
 """)
-env.Program('AstroMenace.html', SOURCES + LIBVORBIS + LIBOGG)
+env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut)

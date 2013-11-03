@@ -11,6 +11,12 @@ env = Environment(
     OBJSUFFIX='.bc',
     LIBSUFFIX='.bc',
     PROGSUFFIX='.html',
+    CPPDEFINES=[
+        'HAVE_STDINT_H',
+        'HAVE_STAT',
+        'HAVE_USLEEP',
+        'HAVE_UNISTD_H',
+    ],
     CPPPATH=[
         '#/deps/libogg-1.3.1/include',
         '#/deps/libvorbis-1.3.3/include',
