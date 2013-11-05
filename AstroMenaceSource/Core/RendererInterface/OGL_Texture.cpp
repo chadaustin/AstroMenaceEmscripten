@@ -28,15 +28,6 @@
 #include "RendererInterface.h"
 
 
-extern	PFNGLACTIVETEXTUREARBPROC glActiveTexture_ARB;
-extern	PFNGLGENERATEMIPMAPPROC glGenerateMipmapEXT;
-extern	PFNGLTEXSTORAGE2DPROC glTexStorage2DEXT;
-
-
-
-
-
-
 //------------------------------------------------------------------------------------
 // Создание текстуры
 //------------------------------------------------------------------------------------
@@ -147,7 +138,7 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 //------------------------------------------------------------------------------------
 void vw_BindTexture(DWORD Stage, GLuint TextureID)
 {
-	if (glActiveTexture_ARB != 0) glActiveTexture_ARB(GL_TEXTURE0 + Stage);
+	if (glActiveTextureARB != 0) glActiveTextureARB(GL_TEXTURE0 + Stage);
 
 	if (TextureID != 0)
 	{

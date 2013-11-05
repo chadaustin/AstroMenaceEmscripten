@@ -39,7 +39,10 @@
 	#include <shellapi.h>
 #endif
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(EMSCRIPTEN)
+        #include <GL/Regal.h>
+        #include <GL/glu.h>
+#elif defined(__APPLE__) && defined(__MACH__)
 	#define __glext_h_  // Don't let gl.h include glext.h
 	#include <OpenGL/gl.h>	// Header File For The OpenGL Library
 	#include <OpenGL/glu.h>	// Header File For The GLu Library

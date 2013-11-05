@@ -235,6 +235,33 @@ LIBFREETYPE = [os.path.join('freetype', 'src', x) for x in Split("""
 """)]
 libfreetype = env.Library(['freetype'], LIBFREETYPE)
 
+LIBREGAL = Split("""
+    deps/regal/src/glu/libutil/mipmap.c
+    deps/regal/src/glu/libutil/error.c
+    deps/regal/src/glu/libutil/glue.c
+    
+    deps/regal/src/regal/RegalHelper.cpp    
+    deps/regal/src/regal/Regal.cpp
+    deps/regal/src/regal/RegalBreak.cpp
+    deps/regal/src/regal/RegalLog.cpp
+    deps/regal/src/regal/RegalCacheShader.cpp
+    deps/regal/src/regal/RegalCacheTexture.cpp
+    deps/regal/src/regal/RegalDispatch.cpp
+    deps/regal/src/regal/RegalDispatchLog.cpp
+    deps/regal/src/regal/RegalUtil.cpp
+    deps/regal/src/regal/RegalInit.cpp
+    deps/regal/src/regal/RegalToken.cpp
+""")
+regalenv = env.Clone()
+regalenv.Append(
+    CPPDEFINES=['REGAL_NO_PNG'],
+    CPPPATH=[
+        '#/deps/regal/src/glu/include',
+        '#/deps/regal/include',
+        '#/deps/regal/src/lookup3',
+        '#/deps/regal/src/boost'])
+libregal = regalenv.Library(['regal'], LIBREGAL)
+
 SOURCES = Split("""
     deps/SDL_rwops.c
     deps/SDL_malloc.c
@@ -381,4 +408,4 @@ SOURCES = Split("""
 env = env.Clone()
 env.Append(
     LINKFLAGS=['--preload-file', 'bin@/bin'])
-env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut + libfreetype)
+env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut + libfreetype + libregal)

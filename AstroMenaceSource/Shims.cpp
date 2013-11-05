@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 extern "C" {
+    /*
     void glPushAttrib(GLbitfield) {
     }
 
@@ -23,6 +24,7 @@ extern "C" {
     GLint gluBuild2DMipmaps(GLenum  target,  GLint  internalFormat,  GLsizei  width,  GLsizei  height,  GLenum  format,  GLenum  type,  const void *  data) {
         return 1;        
     }
+    */
 
     ALboolean alIsSource(ALuint sourceName) {
         return AL_FALSE;

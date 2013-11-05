@@ -54,17 +54,6 @@ int tmpPrimCountGL=0;
 int PrimCountGL=0;
 
 
-
-
-// multitexture (OpenGL 1.3)
-PFNGLACTIVETEXTUREARBPROC		glActiveTexture_ARB = NULL;
-PFNGLCLIENTACTIVETEXTUREARBPROC	glClientActiveTexture_ARB = NULL;
-// GL_ARB_texture_storage (OpenGL 4.2)
-PFNGLTEXSTORAGE2DPROC 			glTexStorage2DEXT = NULL;
-
-
-
-
 float CurrentGammaGL = 1.0f;
 float CurrentContrastGL = 1.0f;
 float CurrentBrightnessGL = 1.0f;
@@ -537,9 +526,7 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 
 	if (OpenGL_DevCaps.MaxMultTextures > 1)
 	{
-		glActiveTexture_ARB = (PFNGLACTIVETEXTUREARBPROC) SDL_GL_GetProcAddress("glActiveTexture");
-		glClientActiveTexture_ARB = (PFNGLCLIENTACTIVETEXTUREARBPROC) SDL_GL_GetProcAddress("glClientActiveTexture");
-		if (glActiveTexture_ARB == NULL || glClientActiveTexture_ARB == NULL)
+		if (glActiveTextureARB == NULL || glClientActiveTextureARB == NULL)
 		{
 			OpenGL_DevCaps.MaxMultTextures = 1;
 			fprintf(stderr, "Can't get proc address for glActiveTexture or glClientActiveTexture.\n\n");
@@ -548,8 +535,6 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 
 	if (OpenGL_DevCaps.TextureStorage)
 	{
-		glTexStorage2DEXT = (PFNGLTEXSTORAGE2DPROC) SDL_GL_GetProcAddress("glTexStorage2D");
-		if (glTexStorage2DEXT == NULL) glTexStorage2DEXT = (PFNGLTEXSTORAGE2DPROC) SDL_GL_GetProcAddress("glTexStorage2DEXT");
 		if (glTexStorage2DEXT == NULL)
 		{
 			OpenGL_DevCaps.TextureStorage = false;

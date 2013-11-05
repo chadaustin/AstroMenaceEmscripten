@@ -31,105 +31,12 @@ extern eDevCaps OpenGL_DevCaps;
 // текущий работающий буфер, если 0 - фрейм буфер
 eFBO *CurrentFBO = 0;
 
-// указатели на функии
-PFNGLGENRENDERBUFFERSEXTPROC				glGenRenderbuffersEXT = NULL;
-PFNGLBINDRENDERBUFFEREXTPROC				glBindRenderbufferEXT = NULL;
-PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC	glRenderbufferStorageMultisampleEXT = NULL;
-PFNGLGENRENDERBUFFERSEXTPROC				glGenFramebuffersEXT = NULL;
-PFNGLBINDFRAMEBUFFEREXTPROC					glBindFramebufferEXT = NULL;
-PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC			glFramebufferRenderbufferEXT = NULL;
-PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC			glCheckFramebufferStatusEXT = NULL;
-PFNGLFRAMEBUFFERTEXTURE2DEXTPROC			glFramebufferTexture2DEXT = NULL;
-PFNGLDELETERENDERBUFFERSEXTPROC				glDeleteRenderbuffersEXT = NULL;
-PFNGLDELETEFRAMEBUFFERSEXTPROC				glDeleteFramebuffersEXT = NULL;
-PFNGLBLITFRAMEBUFFEREXTPROC					glBlitFramebufferEXT = NULL;
-PFNGLISFRAMEBUFFEREXTPROC					glIsFramebufferEXT = NULL;
-PFNGLGENERATEMIPMAPPROC 					glGenerateMipmapEXT = NULL;
-PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC		glGetFramebufferAttachmentParameterivEXT = NULL;
-// GL_NV_framebuffer_multisample_coverage, не обязательный
-PFNGLRENDERBUFFERSTORAGEMULTISAMPLECOVERAGENVPROC	glRenderbufferStorageMultisampleCoverageNV = NULL;
-
-
-
 
 //------------------------------------------------------------------------------------
 // Инициализация работы с FBO
 //------------------------------------------------------------------------------------
 bool vw_Internal_InitializationFBO()
 {
-	// GL_ARB_framebuffer_object
-	glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glGenRenderbuffers");
-	glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC) SDL_GL_GetProcAddress("glBindRenderbuffer");
-	glRenderbufferStorageMultisampleEXT = (PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC) SDL_GL_GetProcAddress("glRenderbufferStorageMultisample");
-	glGenFramebuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glGenFramebuffers");
-	glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glBindFramebuffer");
-	glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC) SDL_GL_GetProcAddress("glFramebufferRenderbuffer");
-	glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC) SDL_GL_GetProcAddress("glCheckFramebufferStatus");
-	glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC) SDL_GL_GetProcAddress("glFramebufferTexture2D");
-	glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glDeleteRenderbuffers");
-	glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC) SDL_GL_GetProcAddress("glDeleteFramebuffers");
-	glBlitFramebufferEXT = (PFNGLBLITFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glBlitFramebuffer");
-	glIsFramebufferEXT = (PFNGLISFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glIsFramebuffer");
-	glGenerateMipmapEXT = (PFNGLGENERATEMIPMAPPROC) SDL_GL_GetProcAddress("glGenerateMipmap");
-	glGetFramebufferAttachmentParameterivEXT = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC) SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameteriv");
-
-
-	if (glGenRenderbuffersEXT == NULL || glBindRenderbufferEXT == NULL ||
-		glRenderbufferStorageMultisampleEXT == NULL || glGenFramebuffersEXT == NULL ||
-		glBindFramebufferEXT == NULL || glFramebufferRenderbufferEXT == NULL ||
-		glCheckFramebufferStatusEXT == NULL || glFramebufferTexture2DEXT == NULL ||
-		glDeleteRenderbuffersEXT == NULL || glDeleteFramebuffersEXT == NULL ||
-		glBlitFramebufferEXT == NULL || glIsFramebufferEXT == NULL ||
-		glGenerateMipmapEXT == NULL || glGetFramebufferAttachmentParameterivEXT == NULL)
-	{
-		// GL_EXT_framebuffer_object+GL_EXT_framebuffer_multisample+GL_EXT_framebuffer_blit
-		glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glGenRenderbuffersEXT");
-		glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC) SDL_GL_GetProcAddress("glBindRenderbufferEXT");
-		glRenderbufferStorageMultisampleEXT = (PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC) SDL_GL_GetProcAddress("glRenderbufferStorageMultisampleEXT");
-		glGenFramebuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glGenFramebuffersEXT");
-		glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glBindFramebufferEXT");
-		glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC) SDL_GL_GetProcAddress("glFramebufferRenderbufferEXT");
-		glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC) SDL_GL_GetProcAddress("glCheckFramebufferStatusEXT");
-		glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC) SDL_GL_GetProcAddress("glFramebufferTexture2DEXT");
-		glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC) SDL_GL_GetProcAddress("glDeleteRenderbuffersEXT");
-		glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC) SDL_GL_GetProcAddress("glDeleteFramebuffersEXT");
-		glBlitFramebufferEXT = (PFNGLBLITFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glBlitFramebufferEXT");
-		glIsFramebufferEXT = (PFNGLISFRAMEBUFFEREXTPROC) SDL_GL_GetProcAddress("glIsFramebufferEXT");
-		glGenerateMipmapEXT = (PFNGLGENERATEMIPMAPPROC) SDL_GL_GetProcAddress("glGenerateMipmapEXT");
-		glGetFramebufferAttachmentParameterivEXT = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC) SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
-	}
-
-
-	if (glGenRenderbuffersEXT == NULL || glBindRenderbufferEXT == NULL ||
-		glRenderbufferStorageMultisampleEXT == NULL || glGenFramebuffersEXT == NULL ||
-		glBindFramebufferEXT == NULL || glFramebufferRenderbufferEXT == NULL ||
-		glCheckFramebufferStatusEXT == NULL || glFramebufferTexture2DEXT == NULL ||
-		glDeleteRenderbuffersEXT == NULL || glDeleteFramebuffersEXT == NULL ||
-		glBlitFramebufferEXT == NULL || glIsFramebufferEXT == NULL ||
-		glGenerateMipmapEXT == NULL || glGetFramebufferAttachmentParameterivEXT == NULL)
-	{
-		glGenRenderbuffersEXT = NULL;
-		glBindRenderbufferEXT = NULL;
-		glRenderbufferStorageMultisampleEXT = NULL;
-		glGenFramebuffersEXT = NULL;
-		glBindFramebufferEXT = NULL;
-		glFramebufferRenderbufferEXT = NULL;
-		glCheckFramebufferStatusEXT = NULL;
-		glFramebufferTexture2DEXT = NULL;
-		glDeleteRenderbuffersEXT = NULL;
-		glDeleteFramebuffersEXT = NULL;
-		glBlitFramebufferEXT = NULL;
-		glIsFramebufferEXT = NULL;
-		glGenerateMipmapEXT = NULL;
-		glGetFramebufferAttachmentParameterivEXT = NULL;
-
-		return false;
-	}
-
-	// инициализируем GL_NV_framebuffer_multisample_coverage, как не обязательный
-	glRenderbufferStorageMultisampleCoverageNV = (PFNGLRENDERBUFFERSTORAGEMULTISAMPLECOVERAGENVPROC) SDL_GL_GetProcAddress("glRenderbufferStorageMultisampleCoverageNV");
-
-
 	return true;
 }
 

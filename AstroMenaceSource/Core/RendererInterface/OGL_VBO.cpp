@@ -28,42 +28,11 @@
 #include "RendererInterface.h"
 
 
-// VBO Extension Function Pointers
-PFNGLGENBUFFERSARBPROC 		glGenBuffersARB = NULL;		// VBO Name Generation Procedure
-PFNGLBINDBUFFERARBPROC 		glBindBufferARB = NULL;		// VBO Bind Procedure
-PFNGLBUFFERDATAARBPROC 		glBufferDataARB = NULL;		// VBO Data Loading Procedure
-PFNGLDELETEBUFFERSARBPROC 	glDeleteBuffersARB = NULL;	// VBO Deletion Procedure
-PFNGLISBUFFERARBPROC 		glIsBufferARB = NULL;
-
-
-
-
-
-
 //------------------------------------------------------------------------------------
 // Инициализация работы с VBO
 //------------------------------------------------------------------------------------
 bool vw_Internal_InitializationVBO()
 {
-	// Get Pointers To The GL Functions
-	glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) SDL_GL_GetProcAddress("glGenBuffersARB");
-	glBindBufferARB = (PFNGLBINDBUFFERARBPROC) SDL_GL_GetProcAddress("glBindBufferARB");
-	glBufferDataARB = (PFNGLBUFFERDATAARBPROC) SDL_GL_GetProcAddress("glBufferDataARB");
-	glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) SDL_GL_GetProcAddress("glDeleteBuffersARB");
-	glIsBufferARB = (PFNGLISBUFFERARBPROC) SDL_GL_GetProcAddress("glIsBufferARB");
-
-	if (glGenBuffersARB == NULL || glBindBufferARB == NULL || glBufferDataARB == NULL ||
-		glDeleteBuffersARB == NULL || glIsBufferARB == NULL)
-	{
-		glGenBuffersARB 	= NULL;
-		glBindBufferARB 	= NULL;
-		glBufferDataARB 	= NULL;
-		glDeleteBuffersARB 	= NULL;
-		glIsBufferARB 		= NULL;
-
-		return false;
-	}
-
 	return true;
 }
 

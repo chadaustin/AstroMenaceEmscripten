@@ -20,6 +20,7 @@ env = Environment(
         'FT2_BUILD_LIBRARY',
     ],
     CPPPATH=[
+        '#/deps/regal/include',
         '#/deps/libogg-1.3.1/include',
         '#/deps/libvorbis-1.3.3/include',
         '$EMHOME/tests/freetype/include',
@@ -30,11 +31,10 @@ env = Environment(
         '-Wno-warn-absolute-paths',
         '-Wno-unused-function',
         '-Wno-overloaded-virtual',
-        '-O0' ],
+        '-O1' ],
     LINKFLAGS=[
-        '-O1',
+        '-O0',
         '-s', 'TOTAL_MEMORY=209715200',
-        '-s', 'LEGACY_GL_EMULATION=1',
         '-s', 'SAFE_DYNCALLS=1',
         '-s', 'ERROR_ON_UNDEFINED_SYMBOLS=1' ])
 

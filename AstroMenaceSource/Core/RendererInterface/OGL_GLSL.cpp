@@ -24,58 +24,9 @@
 
 *************************************************************************************/
 
-
 #include "RendererInterface.h"
 extern eDevCaps OpenGL_DevCaps;
 
-
-
-// GL_ARB_shader_objects
-PFNGLDELETEOBJECTARBPROC glDeleteObjectARB = NULL;
-PFNGLGETHANDLEARBPROC glGetHandleARB = NULL;
-PFNGLDETACHOBJECTARBPROC glDetachObjectARB = NULL;
-PFNGLCREATESHADEROBJECTARBPROC glCreateShaderObjectARB = NULL;
-PFNGLSHADERSOURCEARBPROC glShaderSourceARB = NULL;
-PFNGLCOMPILESHADERARBPROC glCompileShaderARB = NULL;
-PFNGLCREATEPROGRAMOBJECTARBPROC glCreateProgramObjectARB = NULL;
-PFNGLATTACHOBJECTARBPROC glAttachObjectARB = NULL;
-PFNGLLINKPROGRAMARBPROC glLinkProgramARB = NULL;
-PFNGLUSEPROGRAMOBJECTARBPROC glUseProgramObjectARB = NULL;
-PFNGLVALIDATEPROGRAMARBPROC glValidateProgramARB = NULL;
-PFNGLUNIFORM1FARBPROC glUniform1fARB = NULL;
-PFNGLUNIFORM2FARBPROC glUniform2fARB = NULL;
-PFNGLUNIFORM3FARBPROC glUniform3fARB = NULL;
-PFNGLUNIFORM4FARBPROC glUniform4fARB = NULL;
-PFNGLUNIFORM1IARBPROC glUniform1iARB = NULL;
-PFNGLUNIFORM2IARBPROC glUniform2iARB = NULL;
-PFNGLUNIFORM3IARBPROC glUniform3iARB = NULL;
-PFNGLUNIFORM4IARBPROC glUniform4iARB = NULL;
-PFNGLUNIFORM1FVARBPROC glUniform1fvARB = NULL;
-PFNGLUNIFORM2FVARBPROC glUniform2fvARB = NULL;
-PFNGLUNIFORM3FVARBPROC glUniform3fvARB = NULL;
-PFNGLUNIFORM4FVARBPROC glUniform4fvARB = NULL;
-PFNGLUNIFORM1IVARBPROC glUniform1ivARB = NULL;
-PFNGLUNIFORM2IVARBPROC glUniform2ivARB = NULL;
-PFNGLUNIFORM3IVARBPROC glUniform3ivARB = NULL;
-PFNGLUNIFORM4IVARBPROC glUniform4ivARB = NULL;
-PFNGLUNIFORMMATRIX2FVARBPROC glUniformMatrix2fvARB = NULL;
-PFNGLUNIFORMMATRIX3FVARBPROC glUniformMatrix3fvARB = NULL;
-PFNGLUNIFORMMATRIX4FVARBPROC glUniformMatrix4fvARB = NULL;
-PFNGLGETOBJECTPARAMETERFVARBPROC glGetObjectParameterfvARB = NULL;
-PFNGLGETOBJECTPARAMETERIVARBPROC glGetObjectParameterivARB = NULL;
-PFNGLGETINFOLOGARBPROC glGetInfoLogARB = NULL;
-PFNGLGETATTACHEDOBJECTSARBPROC glGetAttachedObjectsARB = NULL;
-PFNGLGETUNIFORMLOCATIONARBPROC glGetUniformLocationARB = NULL;
-PFNGLGETACTIVEUNIFORMARBPROC glGetActiveUniformARB = NULL;
-PFNGLGETUNIFORMFVARBPROC glGetUniformfvARB = NULL;
-PFNGLGETUNIFORMIVARBPROC glGetUniformivARB = NULL;
-PFNGLGETSHADERSOURCEARBPROC glGetShaderSourceARB = NULL;
-
-
-// GL_ARB_vertex_shader
-PFNGLBINDATTRIBLOCATIONARBPROC glBindAttribLocationARB = NULL;
-PFNGLGETACTIVEATTRIBARBPROC glGetActiveAttribARB = NULL;
-PFNGLGETATTRIBLOCATIONARBPROC glGetAttribLocationARB = NULL;
 
 
 // для менеджера
@@ -83,134 +34,15 @@ eGLSL *StartGLSLMan = 0;
 eGLSL *EndGLSLMan = 0;
 int NumGLSLMan = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //------------------------------------------------------------------------------------
 // иним и подключаем все указатели
 //------------------------------------------------------------------------------------
 bool vw_Internal_InitializationGLSL()
 {
-	// GL_ARB_shader_objects
-	glDeleteObjectARB = (PFNGLDELETEOBJECTARBPROC) SDL_GL_GetProcAddress("glDeleteObjectARB");
-	glGetHandleARB = (PFNGLGETHANDLEARBPROC) SDL_GL_GetProcAddress("glGetHandleARB");
-	glDetachObjectARB = (PFNGLDETACHOBJECTARBPROC) SDL_GL_GetProcAddress("glDetachObjectARB");
-	glCreateShaderObjectARB = (PFNGLCREATESHADEROBJECTARBPROC) SDL_GL_GetProcAddress("glCreateShaderObjectARB");
-	glShaderSourceARB = (PFNGLSHADERSOURCEARBPROC) SDL_GL_GetProcAddress("glShaderSourceARB");
-	glCompileShaderARB = (PFNGLCOMPILESHADERARBPROC) SDL_GL_GetProcAddress("glCompileShaderARB");
-	glCreateProgramObjectARB = (PFNGLCREATEPROGRAMOBJECTARBPROC) SDL_GL_GetProcAddress("glCreateProgramObjectARB");
-	glAttachObjectARB = (PFNGLATTACHOBJECTARBPROC) SDL_GL_GetProcAddress("glAttachObjectARB");
-	glLinkProgramARB = (PFNGLLINKPROGRAMARBPROC) SDL_GL_GetProcAddress("glLinkProgramARB");
-	glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC) SDL_GL_GetProcAddress("glUseProgramObjectARB");
-	glValidateProgramARB = (PFNGLVALIDATEPROGRAMARBPROC) SDL_GL_GetProcAddress("glValidateProgramARB");
-	glUniform1fARB = (PFNGLUNIFORM1FARBPROC) SDL_GL_GetProcAddress("glUniform1fARB");
-	glUniform2fARB = (PFNGLUNIFORM2FARBPROC) SDL_GL_GetProcAddress("glUniform2fARB");
-	glUniform3fARB = (PFNGLUNIFORM3FARBPROC) SDL_GL_GetProcAddress("glUniform3fARB");
-	glUniform4fARB = (PFNGLUNIFORM4FARBPROC) SDL_GL_GetProcAddress("glUniform4fARB");
-	glUniform1iARB = (PFNGLUNIFORM1IARBPROC) SDL_GL_GetProcAddress("glUniform1iARB");
-	glUniform2iARB = (PFNGLUNIFORM2IARBPROC) SDL_GL_GetProcAddress("glUniform2iARB");
-	glUniform3iARB = (PFNGLUNIFORM3IARBPROC) SDL_GL_GetProcAddress("glUniform3iARB");
-	glUniform4iARB = (PFNGLUNIFORM4IARBPROC) SDL_GL_GetProcAddress("glUniform4iARB");
-	glUniform1fvARB = (PFNGLUNIFORM1FVARBPROC) SDL_GL_GetProcAddress("glUniform1fvARB");
-	glUniform2fvARB = (PFNGLUNIFORM2FVARBPROC) SDL_GL_GetProcAddress("glUniform2fvARB");
-	glUniform3fvARB = (PFNGLUNIFORM3FVARBPROC) SDL_GL_GetProcAddress("glUniform3fvARB");
-	glUniform4fvARB = (PFNGLUNIFORM4FVARBPROC) SDL_GL_GetProcAddress("glUniform4fvARB");
-	glUniform1ivARB = (PFNGLUNIFORM1IVARBPROC) SDL_GL_GetProcAddress("glUniform1ivARB");
-	glUniform2ivARB = (PFNGLUNIFORM2IVARBPROC) SDL_GL_GetProcAddress("glUniform2ivARB");
-	glUniform3ivARB = (PFNGLUNIFORM3IVARBPROC) SDL_GL_GetProcAddress("glUniform3ivARB");
-	glUniform4ivARB = (PFNGLUNIFORM4IVARBPROC) SDL_GL_GetProcAddress("glUniform4ivARB");
-	glUniformMatrix2fvARB = (PFNGLUNIFORMMATRIX2FVARBPROC) SDL_GL_GetProcAddress("glUniformMatrix2fvARB");
-	glUniformMatrix3fvARB = (PFNGLUNIFORMMATRIX3FVARBPROC) SDL_GL_GetProcAddress("glUniformMatrix3fvARB");
-	glUniformMatrix4fvARB = (PFNGLUNIFORMMATRIX4FVARBPROC) SDL_GL_GetProcAddress("glUniformMatrix4fvARB");
-	glGetObjectParameterfvARB = (PFNGLGETOBJECTPARAMETERFVARBPROC) SDL_GL_GetProcAddress("glGetObjectParameterfvARB");
-	glGetObjectParameterivARB = (PFNGLGETOBJECTPARAMETERIVARBPROC) SDL_GL_GetProcAddress("glGetObjectParameterivARB");
-	glGetInfoLogARB = (PFNGLGETINFOLOGARBPROC) SDL_GL_GetProcAddress("glGetInfoLogARB");
-	glGetAttachedObjectsARB = (PFNGLGETATTACHEDOBJECTSARBPROC) SDL_GL_GetProcAddress("glGetAttachedObjectsARB");
-	glGetUniformLocationARB = (PFNGLGETUNIFORMLOCATIONARBPROC) SDL_GL_GetProcAddress("glGetUniformLocationARB");
-	glGetActiveUniformARB = (PFNGLGETACTIVEUNIFORMARBPROC) SDL_GL_GetProcAddress("glGetActiveUniformARB");
-	glGetUniformfvARB = (PFNGLGETUNIFORMFVARBPROC) SDL_GL_GetProcAddress("glGetUniformfvARB");
-	glGetUniformivARB = (PFNGLGETUNIFORMIVARBPROC) SDL_GL_GetProcAddress("glGetUniformivARB");
-	glGetShaderSourceARB = (PFNGLGETSHADERSOURCEARBPROC) SDL_GL_GetProcAddress("glGetShaderSourceARB");
-
-	// GL_ARB_vertex_shader
-	glBindAttribLocationARB = (PFNGLBINDATTRIBLOCATIONARBPROC) SDL_GL_GetProcAddress("glBindAttribLocationARB");
-	glGetActiveAttribARB = (PFNGLGETACTIVEATTRIBARBPROC) SDL_GL_GetProcAddress("glGetActiveAttribARB");
-	glGetAttribLocationARB = (PFNGLGETATTRIBLOCATIONARBPROC) SDL_GL_GetProcAddress("glGetAttribLocationARB");
-
 	// инициализация менеджера
 	StartGLSLMan = 0;
 	EndGLSLMan = 0;
 	NumGLSLMan = 0;
-
-
-	if (glDeleteObjectARB == NULL || glGetHandleARB == NULL || glDetachObjectARB == NULL || glCreateShaderObjectARB == NULL ||
-		glShaderSourceARB == NULL || glCompileShaderARB == NULL || glCreateProgramObjectARB == NULL || glAttachObjectARB == NULL ||
-		glLinkProgramARB == NULL || glUseProgramObjectARB == NULL || glValidateProgramARB == NULL || glUniform1fARB == NULL ||
-		glUniform2fARB == NULL || glUniform3fARB == NULL || glUniform4fARB == NULL || glUniform1iARB == NULL ||
-		glUniform2iARB == NULL || glUniform3iARB == NULL || glUniform4iARB == NULL || glUniform1fvARB == NULL ||
-		glUniform2fvARB == NULL || glUniform3fvARB == NULL || glUniform4fvARB == NULL || glUniform1ivARB == NULL ||
-		glUniform2ivARB == NULL || glUniform3ivARB == NULL || glUniform4ivARB == NULL || glUniformMatrix2fvARB == NULL ||
-		glUniformMatrix3fvARB == NULL || glUniformMatrix4fvARB == NULL || glGetObjectParameterfvARB == NULL ||
-		glGetObjectParameterivARB == NULL || glGetInfoLogARB == NULL || glGetAttachedObjectsARB == NULL ||
-		glGetUniformLocationARB == NULL || glGetActiveUniformARB == NULL || glGetUniformfvARB == NULL || glGetUniformivARB == NULL ||
-		glGetShaderSourceARB == NULL || glBindAttribLocationARB == NULL || glGetActiveAttribARB == NULL || glGetAttribLocationARB == NULL)
-	{
-		glDeleteObjectARB = NULL;
-		glGetHandleARB = NULL;
-		glDetachObjectARB = NULL;
-		glCreateShaderObjectARB = NULL;
-		glShaderSourceARB = NULL;
-		glCompileShaderARB = NULL;
-		glCreateProgramObjectARB = NULL;
-		glAttachObjectARB = NULL;
-		glLinkProgramARB = NULL;
-		glUseProgramObjectARB = NULL;
-		glValidateProgramARB = NULL;
-		glUniform1fARB = NULL;
-		glUniform2fARB = NULL;
-		glUniform3fARB = NULL;
-		glUniform4fARB = NULL;
-		glUniform1iARB = NULL;
-		glUniform2iARB = NULL;
-		glUniform3iARB = NULL;
-		glUniform4iARB = NULL;
-		glUniform1fvARB = NULL;
-		glUniform2fvARB = NULL;
-		glUniform3fvARB = NULL;
-		glUniform4fvARB = NULL;
-		glUniform1ivARB = NULL;
-		glUniform2ivARB = NULL;
-		glUniform3ivARB = NULL;
-		glUniform4ivARB = NULL;
-		glUniformMatrix2fvARB = NULL;
-		glUniformMatrix3fvARB = NULL;
-		glUniformMatrix4fvARB = NULL;
-		glGetObjectParameterfvARB = NULL;
-		glGetObjectParameterivARB = NULL;
-		glGetInfoLogARB = NULL;
-		glGetAttachedObjectsARB = NULL;
-		glGetUniformLocationARB = NULL;
-		glGetActiveUniformARB = NULL;
-		glGetUniformfvARB = NULL;
-		glGetUniformivARB = NULL;
-		glGetShaderSourceARB = NULL;
-		glBindAttribLocationARB = NULL;
-		glGetActiveAttribARB = NULL;
-		glGetAttribLocationARB = NULL;
-
-		return false;
-	}
 
 	return true;
 }

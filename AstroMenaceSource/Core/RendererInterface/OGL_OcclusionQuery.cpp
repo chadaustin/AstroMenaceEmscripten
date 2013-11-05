@@ -28,50 +28,11 @@
 #include "RendererInterface.h"
 
 
-// функции для использования Occlusion Queries
-PFNGLGENQUERIESARBPROC        glGenQueriesARB        = NULL;
-PFNGLDELETEQUERIESARBPROC     glDeleteQueriesARB     = NULL;
-PFNGLISQUERYARBPROC           glIsQueryARB           = NULL;
-PFNGLBEGINQUERYARBPROC        glBeginQueryARB        = NULL;
-PFNGLENDQUERYARBPROC          glEndQueryARB          = NULL;
-PFNGLGETQUERYIVARBPROC        glGetQueryivARB        = NULL;
-PFNGLGETQUERYOBJECTIVARBPROC  glGetQueryObjectivARB  = NULL;
-PFNGLGETQUERYOBJECTUIVARBPROC glGetQueryObjectuivARB = NULL;
-
-
-
-
 //------------------------------------------------------------------------------------
 // Инициализации работы с Occlusion Queries
 //------------------------------------------------------------------------------------
 bool vw_Internal_InitializationOcclusionQueries()
 {
-	// Get Pointers To The GL Functions
-	glGenQueriesARB        = (PFNGLGENQUERIESARBPROC) SDL_GL_GetProcAddress("glGenQueriesARB");
-	glDeleteQueriesARB     = (PFNGLDELETEQUERIESARBPROC) SDL_GL_GetProcAddress("glDeleteQueriesARB");
-	glIsQueryARB           = (PFNGLISQUERYARBPROC) SDL_GL_GetProcAddress("glIsQueryARB");
-	glBeginQueryARB        = (PFNGLBEGINQUERYARBPROC) SDL_GL_GetProcAddress("glBeginQueryARB");
-	glEndQueryARB          = (PFNGLENDQUERYARBPROC) SDL_GL_GetProcAddress("glEndQueryARB");
-	glGetQueryivARB        = (PFNGLGETQUERYIVARBPROC) SDL_GL_GetProcAddress("glGetQueryivARB");
-	glGetQueryObjectivARB  = (PFNGLGETQUERYOBJECTIVARBPROC) SDL_GL_GetProcAddress("glGetQueryObjectivARB");
-	glGetQueryObjectuivARB = (PFNGLGETQUERYOBJECTUIVARBPROC) SDL_GL_GetProcAddress("glGetQueryObjectuivARB");
-
-	// если хоть с одной функцией проблемы - не работаем вообще
-	if (glGenQueriesARB == NULL || glDeleteQueriesARB == NULL || glIsQueryARB == NULL ||
-		glBeginQueryARB == NULL || glEndQueryARB == NULL || glGetQueryivARB == NULL ||
-		glGetQueryObjectivARB == NULL || glGetQueryObjectuivARB)
-	{
-		glGenQueriesARB        = NULL;
-		glDeleteQueriesARB     = NULL;
-		glIsQueryARB           = NULL;
-		glBeginQueryARB        = NULL;
-		glEndQueryARB          = NULL;
-		glGetQueryivARB        = NULL;
-		glGetQueryObjectivARB  = NULL;
-		glGetQueryObjectuivARB = NULL;
-		return false;
-	}
-
 	return true;
 }
 
