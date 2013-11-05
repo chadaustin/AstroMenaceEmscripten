@@ -12,6 +12,7 @@ env = Environment(
     LIBSUFFIX='.bc',
     PROGSUFFIX='.html',
     CPPDEFINES=[
+        'HAVE_STDIO_H',
         'HAVE_STDINT_H',
         'HAVE_STAT',
         'HAVE_USLEEP',
@@ -31,7 +32,7 @@ env = Environment(
         '-Wno-overloaded-virtual',
         '-O0' ],
     LINKFLAGS=[
-        '-O0',
+        '-O1',
         '-s', 'LEGACY_GL_EMULATION=1',
         '-s', 'SAFE_DYNCALLS=1',
         '-s', 'ERROR_ON_UNDEFINED_SYMBOLS=1' ])
