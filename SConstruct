@@ -33,6 +33,7 @@ env = Environment(
         '-O0' ],
     LINKFLAGS=[
         '-O1',
+        '-s', 'TOTAL_MEMORY=209715200',
         '-s', 'LEGACY_GL_EMULATION=1',
         '-s', 'SAFE_DYNCALLS=1',
         '-s', 'ERROR_ON_UNDEFINED_SYMBOLS=1' ])

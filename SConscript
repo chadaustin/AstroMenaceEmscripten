@@ -378,4 +378,7 @@ SOURCES = Split("""
     AstroMenaceSource/ScriptEngine/ScriptFunction.cpp
     AstroMenaceSource/ScriptEngine/Setup.cpp
 """)
+env = env.Clone()
+env.Append(
+    LINKFLAGS=['--preload-file', 'bin@/bin'])
 env.Program('AstroMenace.html', SOURCES + libvorbis + libogg + libfreealut + libfreetype)

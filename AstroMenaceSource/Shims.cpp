@@ -42,4 +42,7 @@ extern "C" {
     int SDL_WaitEvent(SDL_Event *event) {
         return 0;
     }
+
+    void SDL_Delay(Uint32) {
+    }
 }
