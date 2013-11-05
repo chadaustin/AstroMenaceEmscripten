@@ -1,0 +1,3 @@
+[submodule "deps/regal"]
+	path = deps/regal
+	url = git@github.com:chadaustin/regal.git
