@@ -288,14 +288,6 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 void vw_SendVertices_DisableStatesAndPointers(int DataFormat, unsigned int *VBO, unsigned int *VAO)
 {
 	// флаг нужно ли с вaо делать
-	bool NeedVAO = OpenGL_DevCaps.VAOSupported;
-	if (VAO == 0) NeedVAO = false;
-
-	if (NeedVAO)
-	{
-		vw_BindVAO(0);
-	}
-	else
 	{
 		// флаг нужно ли с вбо делать
 		bool NeedVBO = OpenGL_DevCaps.VBOSupported;
@@ -334,17 +326,11 @@ void vw_SendVertices(int PrimitiveType, int NumVertices, int DataFormat, void *D
 	// если ничего не передали
 	if (Data == 0 && VBO == 0 && VAO == 0) return;
 	// флаг нужно ли с вaо делать
-	bool NeedVAO = OpenGL_DevCaps.VAOSupported;
-	if (VAO == 0) NeedVAO = false;
 
 
 	// устанавливаем все необходимые указатели для прорисовки и получаем индексы
 	GLuint *VertexIndexPointer = 0;
-	if (NeedVAO)
-	{
-		vw_BindVAO(*VAO);
-	}
-	else
+
 	{
 		VertexIndexPointer = vw_SendVertices_EnableStatesAndPointers(NumVertices, DataFormat, Data, Stride, VBO, RangeStart, DataIndex, DataIndexVBO);
 	}

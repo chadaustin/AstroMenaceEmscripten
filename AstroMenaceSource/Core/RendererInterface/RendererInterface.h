@@ -74,10 +74,6 @@ struct eDevCaps
 	int FramebufferObjectDepthSize;
 	// поддержка VBO
 	bool VBOSupported;
-	// поддержка VAO
-	bool VAOSupported;
-	// поддержка загрузки текстур со сторонами не кратные степени двойки
-	bool TextureNPOTSupported;
 	// поддержка шейдеров GLSL 1.00
 	bool GLSL100Supported;
 	// шейдерная модель

@@ -1032,17 +1032,6 @@ ReCreate:
 		CAPS->VBOSupported = false;
 	}
 
-	// если нужно, выключаем vao
-#ifndef vao // принудительно отключаем вообще работу с vao
-	CAPS->VAOSupported = false;
-	printf("Vertex Array Object support forced disabled.\n");
-#endif
-	// работаем только если есть VBO
-	if ((Setup.VAOCoreMode == 0) || (Setup.VBOCoreMode == 0) || (!CAPS->VBOSupported))
-	{
-		CAPS->VAOSupported = false;
-	}
-
 	// если нужно, выключаем fbo
 #ifndef fbo // принудительно отключаем вообще работу с fbo
 	CAPS->FramebufferObject = false;

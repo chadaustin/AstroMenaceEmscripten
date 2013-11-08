@@ -139,8 +139,6 @@ void InitSetup()
 	// всегда включен по умолчанию, если что железо само поймет что ему надо
 	Setup.VBOCoreMode = 1;
 	Setup.FBOCoreMode = 1;
-	// по умолчанию выключаем VAO из-за проблем у пользователей некоторых видео карт AMD и Intel
-	Setup.VAOCoreMode = 0;
 	// по умолчанию всегда меньше 128 метров
 	Setup.EqualOrMore128MBVideoRAM = false;
 }
@@ -202,7 +200,6 @@ void SaveXMLSetupFile()
 
 	XMLdoc->AddComment(RootXMLEntry, " Don't change this setting unless you know what you are doing ");
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "VBOCoreMode"), "value", Setup.VBOCoreMode);
-	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "VAOCoreMode"), "value", Setup.VAOCoreMode);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "FBOCoreMode"), "value", Setup.FBOCoreMode);
 	XMLdoc->AddComment(RootXMLEntry, " If your video card have 128+ MB VRAM on board - turn it on ");
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "EqualOrMore128MBVideoRAM"), "value", Setup.EqualOrMore128MBVideoRAM);
@@ -532,9 +529,6 @@ bool LoadXMLSetupFile(bool NeedSafeMode)
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode"), "value") != 0)
 			Setup.VBOCoreMode = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode"), "value");
-	if (XMLdoc->FindEntryByName(RootXMLEntry, "VAOCoreMode") != 0)
-		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VAOCoreMode"), "value") != 0)
-			Setup.VAOCoreMode = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VAOCoreMode"), "value");
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode"), "value") != 0)
 			Setup.FBOCoreMode = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode"), "value");

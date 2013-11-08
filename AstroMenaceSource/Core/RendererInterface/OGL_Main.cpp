@@ -237,8 +237,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.TexturesCompression = false;
 	OpenGL_DevCaps.TexturesCompressionBPTC = false;
 	OpenGL_DevCaps.VBOSupported = false;
-	OpenGL_DevCaps.VAOSupported = false;
-	OpenGL_DevCaps.TextureNPOTSupported = false;
 	OpenGL_DevCaps.GLSL100Supported = false;
 	OpenGL_DevCaps.ShaderModel = 0;
 	OpenGL_DevCaps.TextureStorage = false;
@@ -295,17 +293,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 		OpenGL_DevCaps.VBOSupported = true;
 		printf("Vertex Buffer support enabled.\n");
 	}
-
-	// проверем поддержку VAO
-	if (ExtensionSupported("GL_ARB_vertex_array_object"))
-	{
-		OpenGL_DevCaps.VAOSupported = true;
-		printf("Vertex Array support enabled.\n");
-	}
-
-	// проверем поддержку non_power_of_two генерацию текстур
-	if (ExtensionSupported("GL_ARB_texture_non_power_of_two"))
-		OpenGL_DevCaps.TextureNPOTSupported = true;
 
 	// проверяем, есть ли поддержка компрессии текстур
 	if (ExtensionSupported("GL_ARB_texture_compression") && ExtensionSupported("GL_EXT_texture_compression_s3tc"))
@@ -524,8 +511,6 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 	if (OpenGL_DevCaps.GLSL100Supported) OpenGL_DevCaps.GLSL100Supported = vw_Internal_InitializationGLSL();
 	// иним вбо
 	if (OpenGL_DevCaps.VBOSupported) OpenGL_DevCaps.VBOSupported = vw_Internal_InitializationVBO();
-	// иним вaо
-	if (OpenGL_DevCaps.VAOSupported) OpenGL_DevCaps.VAOSupported = vw_Internal_InitializationVAO();
 	// инициализируем FBO
 	if (OpenGL_DevCaps.FramebufferObject)
 	{
