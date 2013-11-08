@@ -232,8 +232,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.MaxTextureHeight = 0;
 	OpenGL_DevCaps.MaxActiveLights = 0;
 	OpenGL_DevCaps.MaxAnisotropyLevel = 0;
-	OpenGL_DevCaps.MaxSamples = 0;
-	OpenGL_DevCaps.MaxMultisampleCoverageModes = 0;
 	OpenGL_DevCaps.TexturesCompression = false;
 	OpenGL_DevCaps.TexturesCompressionBPTC = false;
 	OpenGL_DevCaps.VBOSupported = false;
@@ -379,61 +377,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	else printf("Shader Model: %.1f\n", OpenGL_DevCaps.ShaderModel);
 
 
-	// если есть полная поддержка FBO, значит можем работать с семплами
-	if (OpenGL_DevCaps.FramebufferObject)
-	{
-		glGetIntegerv(GL_MAX_SAMPLES_EXT, &OpenGL_DevCaps.MaxSamples);
-		printf("Max Samples: %i\n", OpenGL_DevCaps.MaxSamples);
-
-		// дальше может и не быть GL_NV_framebuffer_multisample_coverage, потому делаем список сглаживаний
-		int TestSample = 2;
-		OpenGL_DevCaps.MaxMultisampleCoverageModes = 0;
-		while (TestSample <= OpenGL_DevCaps.MaxSamples)
-		{
-			OpenGL_DevCaps.MultisampleCoverageModes[OpenGL_DevCaps.MaxMultisampleCoverageModes].ColorSamples = TestSample;
-			OpenGL_DevCaps.MultisampleCoverageModes[OpenGL_DevCaps.MaxMultisampleCoverageModes].CoverageSamples = TestSample;
-			OpenGL_DevCaps.MaxMultisampleCoverageModes++;
-			TestSample = TestSample*2;
-		}
-
-		// проверяем, есть ли поддержка CSAA
-		if (ExtensionSupported("GL_NV_framebuffer_multisample_coverage"))
-		{
-			glGetIntegerv( GL_MAX_MULTISAMPLE_COVERAGE_MODES_NV, &OpenGL_DevCaps.MaxMultisampleCoverageModes);
-			printf("Max Multisample coverage modes: %i\n", OpenGL_DevCaps.MaxMultisampleCoverageModes);
-			int *coverageConfigs = 0;
-			coverageConfigs = new int[OpenGL_DevCaps.MaxMultisampleCoverageModes * 2 + 4];
-			glGetIntegerv( GL_MULTISAMPLE_COVERAGE_MODES_NV, coverageConfigs);
-
-			// просматриваем все конфиги, печатаем их и делаем второй тест на MSAA
-			int MaxMultiSampleTypeTest2 = -1;
-			for (int kk = 0; kk < OpenGL_DevCaps.MaxMultisampleCoverageModes; kk++)
-			{
-				OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples = coverageConfigs[kk*2+1];
-				OpenGL_DevCaps.MultisampleCoverageModes[kk].CoverageSamples = coverageConfigs[kk*2];
-
-				if (OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples == OpenGL_DevCaps.MultisampleCoverageModes[kk].CoverageSamples)
-				{
-					// если ковередж и глубина/цвет одинаковые - это обычный MSAA
-					printf( " - %d MSAA\n", OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples);
-					if (MaxMultiSampleTypeTest2 < OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples) MaxMultiSampleTypeTest2 = OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples;
-				}
-				else
-				{
-					// CSAA
-					printf( " - %d/%d CSAA\n", OpenGL_DevCaps.MultisampleCoverageModes[kk].CoverageSamples, OpenGL_DevCaps.MultisampleCoverageModes[kk].ColorSamples);
-				}
-			}
-			// GL_MAX_SAMPLES_EXT может нести в себе общий макс. семпл, а не MSAA, если есть поддержка CSAA
-			// смотрим если была доп проверка, и если в доп проверке значение меньше - берем его, оно более корректное
-			if (OpenGL_DevCaps.MaxSamples > MaxMultiSampleTypeTest2) OpenGL_DevCaps.MaxSamples = MaxMultiSampleTypeTest2;
-
-			delete [] coverageConfigs;
-		}
-	}
-
-
-
 #ifdef gamedebug
 	// получаем и выводим все поддерживаемые расширения
 	char *extensions_tmp;
@@ -534,7 +477,7 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 	if (!OpenGL_DevCaps.FramebufferObject)
 	{
 		//выключаем антиалиасинг
-		*MSAA = OpenGL_DevCaps.MaxSamples = 0;
+		*MSAA = 0;
 
 		// сбрасываем в нули структуры буферов (на всякий случай, т.к. не было инициализаций)
 		MainFBO.ColorBuffer = 0;

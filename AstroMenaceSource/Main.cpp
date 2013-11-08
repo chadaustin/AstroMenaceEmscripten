@@ -1110,24 +1110,6 @@ ReCreate:
 	// если не поддерживает железо фбо или шейдеры, выключаем шадовмеп
 	if (!CAPS->FramebufferObject || !CAPS->GLSL100Supported || (CAPS->ShaderModel < 3.0f)) Setup.ShadowMap = 0;
 
-	if (Setup.MSAA > CAPS->MaxSamples) Setup.MSAA = Setup.CSAA = CAPS->MaxSamples;
-	// на всякий случай проверяем, входит ли текущее сглаживание в список доступных
-	int CurrentAAMode = -1;
-	if (Setup.MSAA != 0)
-	{
-		for (int i=0;i<CAPS->MaxMultisampleCoverageModes; i++)
-		{
-			if ((CAPS->MultisampleCoverageModes[i].ColorSamples == Setup.MSAA) &
-				(CAPS->MultisampleCoverageModes[i].CoverageSamples == Setup.CSAA))
-				{
-					CurrentAAMode = i;
-					break;
-				}
-		}
-	}
-	// если ничего не нашли, сбрасываем в нули
-	if (CurrentAAMode == -1) Setup.MSAA = Setup.CSAA = 0;
-
 	// проверка режима сжатия текстур
 	if (!CAPS->TexturesCompression && (Setup.TexturesCompressionType > 0)) Setup.TexturesCompressionType = 0;
 	if (!CAPS->TexturesCompressionBPTC && (Setup.TexturesCompressionType > 1)) Setup.TexturesCompressionType = 1;

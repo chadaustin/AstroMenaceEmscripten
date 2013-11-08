@@ -35,13 +35,6 @@
 
 
 
-struct eCoverageModes
-{
-	int ColorSamples;
-	int CoverageSamples;
-};
-
-
 struct eDevCaps
 {
 	// версия OpenGL
@@ -57,10 +50,6 @@ struct eDevCaps
 	int MaxActiveLights;
 	// максимальный уровень анизотропии
 	int MaxAnisotropyLevel;
-	// макс. уровень антиалиасинга, 0-нет, 2+ - есть
-	int MaxSamples; // MSAA
-	int MaxMultisampleCoverageModes; // кол-во профайлов антиалиасинга с CSAA+MSAA
-	eCoverageModes MultisampleCoverageModes[32]; // собственно сам список режимов CSAA+MSAA, ставим просто 32 штуки, чтобы не заморачиваться с освобождением памяти
 	// есть ли возможность включить сжатие текстур
 	bool TexturesCompression;
 	// поддержка GL_ARB_texture_compression_bptc
