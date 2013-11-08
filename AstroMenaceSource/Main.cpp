@@ -91,13 +91,6 @@ char ScreenshotDir[MAX_PATH];
 //------------------------------------------------------------------------------------
 // состояние кнопок мышки
 bool SDL_MouseCurrentStatus[8];
-// джойстик
-SDL_Joystick *Joystick = NULL;
-// базовые параметры, или параметры блокировки управления (нет сигнала, нули)
-int JoystickAxisX = 0;
-int JoystickAxisY = 0;
-// кнопки джойстика (текущего)
-bool JoysticButtons[100];
 
 
 //------------------------------------------------------------------------------------
@@ -979,39 +972,6 @@ ReCreate:
 
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// проверяем и иним джойстик
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#ifdef joystick
-	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) == 0)
-	{
-		if (SDL_NumJoysticks()>0)
-		{
-			printf("Found Joystick(s):\n");
-			for (int i=0; i<SDL_NumJoysticks(); i++)
-				printf("Joystick Name %i: %s\n", i, SDL_JoystickName(i));
-
-			Joystick = SDL_JoystickOpen(Setup.JoystickNum);
-
-			if(Joystick)
-			{
-				printf("Opened Joystick %i\n", Setup.JoystickNum);
-				printf("Joystick Name: %s\n", SDL_JoystickName(Setup.JoystickNum));
-				printf("Joystick Number of Axes: %d\n", SDL_JoystickNumAxes(Joystick));
-				printf("Joystick Number of Buttons: %d\n", SDL_JoystickNumButtons(Joystick));
-				printf("Joystick Number of Balls: %d\n\n", SDL_JoystickNumBalls(Joystick));
-			}
-			else
-				fprintf(stderr, "Couldn't open Joystick 0\n\n");
-		}
-	}
-	else fprintf(stderr, "Can't init Joystick, SDL Error: %s\n", SDL_GetError());
-#endif
-
-
-
-
-
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// создаем окно и базовые опенжл контекст
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	bool Fullscreen = (Setup.BPP != 0);
@@ -1281,21 +1241,6 @@ loop:
 	bool NeedLoop = true;
 
 
-	// начальные установки джойстика
-	JoystickAxisX = 0;
-	JoystickAxisY = 0;
-	float JoystickCurentTime = vw_GetTime();
-	float JoystickTimeDelta = 0.0f;
-#ifdef joystick
-	if (Joystick != NULL)
-	{
-		JoystickAxisX = SDL_JoystickGetAxis(Joystick, 0);
-		JoystickAxisY = SDL_JoystickGetAxis(Joystick, 1);
-
-		for (int i=0; i<100; i++) JoysticButtons[i] = false;
-	}
-#endif
-
 	// сразу задаем режим работы с юникодом, чтобы SDL давал нам юникод при нажатии на клавишу
 	SDL_EnableUNICODE(1);
 
@@ -1398,40 +1343,9 @@ loop:
 			}
 		}
 
-		// если есть джойстик, считаем для него время
-		if (Joystick != NULL)
-		{
-			JoystickTimeDelta = vw_GetTime() - JoystickCurentTime;
-			JoystickCurentTime = vw_GetTime();
-		}
-
 		// если окно видемое - рисуем
 		if (NeedLoop)
 		{
-
-#ifdef joystick
-			// управление джойстиком
-			if (Joystick != NULL)
-			{
-				int X = SDL_JoystickGetAxis(Joystick, 0);
-				int Y = SDL_JoystickGetAxis(Joystick, 1);
-
-				// учитываем "мертвую зону" хода ручки джойстика
-				if (abs(X) < Setup.JoystickDeadZone*3000) X = 0;
-				if (abs(Y) < Setup.JoystickDeadZone*3000) Y = 0;
-
-				if (JoystickAxisX != X || JoystickAxisY != Y)
-				{
-					JoystickAxisX = 0;
-					JoystickAxisY = 0;
-
-					int Xsm = (int)(1000*(X/32768.0f)*JoystickTimeDelta);
-					int Ysm = (int)(1000*(Y/32768.0f)*JoystickTimeDelta);
-
-					vw_SetMousePosRel(Xsm, Ysm);
-				}
-			}
-#endif
 
 			// всегда включаем счет времени
 			vw_StartTime();
@@ -1497,14 +1411,6 @@ GotoQuit:
 	vw_ReleaseAllTextures();
 	ShadowMap_Release();
 	vw_ShutdownRenderer();
-
-#ifdef joystick
-	// закрываем джойстик, если он был
-	if(SDL_NumJoysticks()>0)
-		if(SDL_JoystickOpened(Setup.JoystickNum))
-			if (Joystick != NULL)
-				SDL_JoystickClose(Joystick);
-#endif
 
 	// полностью выходим из SDL
 	SDL_Quit();
