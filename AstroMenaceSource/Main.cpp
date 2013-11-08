@@ -25,7 +25,6 @@
 *************************************************************************************/
 
 
-#include "emscripten.h"
 #include "Game.h"
 
 
@@ -1230,142 +1229,226 @@ ReCreate:
 
 	Quit = false;
 	NeedReCreate = false;
+	bool NeedLoop = true;
 
 
 	// сразу задаем режим работы с юникодом, чтобы SDL давал нам юникод при нажатии на клавишу
 	SDL_EnableUNICODE(1);
 
-        extern void mainLoop();
-        emscripten_set_main_loop(mainLoop, 30, false);
-}
+	while(!Quit)
+	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event) )
+		{
+			switch (event.type)
+			{
+				// если нажали закрыть окно
+				case SDL_QUIT:
+					Quit = true;
+					goto GotoQuit;
+					break;
 
-void mainLoop() {
-    asm("debugger;");
-    bool NeedLoop = true;
-    SDL_Event event;
-    while (SDL_PollEvent(&event) )
-    {
-        switch (event.type)
-        {
-            // если нажали закрыть окно
-            case SDL_QUIT:
-                Quit = true;
-                    emscripten_cancel_main_loop();
-                    break;
+				// работаем с движением мышки
+				case SDL_MOUSEMOTION:
+                    vw_SetMousePos(event.motion.x, event.motion.y);
+					// если есть перемещение мышкой - сразу убираем управление клавиатурой
+					CurrentKeyboardSelectMenuElement = 0;
+					break;
 
-                    // работаем с движением мышки
-            case SDL_MOUSEMOTION:
-                vw_SetMousePos(event.motion.x, event.motion.y);
-                // если есть перемещение мышкой - сразу убираем управление клавиатурой
-                CurrentKeyboardSelectMenuElement = 0;
-                break;
+				// обрабатываем кнопки мыши
+				case SDL_MOUSEBUTTONDOWN:
+					if (event.button.button ==  SDL_BUTTON_WHEELUP) vw_ChangeWheelStatus(-1);
+					if (event.button.button ==  SDL_BUTTON_WHEELDOWN) vw_ChangeWheelStatus(1);
+					if (event.button.button == SDL_BUTTON_LEFT)
+					{
+						vw_SetWindowLBMouse(true);
+						vw_SetWindowLBDoubleMouse(true);
+					}
+					if (event.button.button ==  SDL_BUTTON_RIGHT)
+						vw_SetWindowRBMouse(true);
+					if (event.button.button<8) // на всякий случай небольшая проверка
+						SDL_MouseCurrentStatus[event.button.button] = true;
+					break;
+				case SDL_JOYBUTTONDOWN:
+					vw_SetWindowLBMouse(true);
+					vw_SetWindowLBDoubleMouse(true);
+					JoysticButtons[event.jbutton.button] = true;
+					break;
 
-                // обрабатываем кнопки мыши
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button ==  SDL_BUTTON_WHEELUP) vw_ChangeWheelStatus(-1);
-                if (event.button.button ==  SDL_BUTTON_WHEELDOWN) vw_ChangeWheelStatus(1);
-                if (event.button.button == SDL_BUTTON_LEFT)
-                {
-                    vw_SetWindowLBMouse(true);
-                    vw_SetWindowLBDoubleMouse(true);
-                }
-                if (event.button.button ==  SDL_BUTTON_RIGHT)
-                    vw_SetWindowRBMouse(true);
-                if (event.button.button<8) // на всякий случай небольшая проверка
-                    SDL_MouseCurrentStatus[event.button.button] = true;
-                break;
-            case SDL_JOYBUTTONDOWN:
-                vw_SetWindowLBMouse(true);
-                vw_SetWindowLBDoubleMouse(true);
-                JoysticButtons[event.jbutton.button] = true;
-                break;
+				case SDL_MOUSEBUTTONUP:
+					if (event.button.button ==  SDL_BUTTON_LEFT)
+						vw_SetWindowLBMouse(false);
+					if (event.button.button ==  SDL_BUTTON_RIGHT)
+						vw_SetWindowRBMouse(false);
+					if (event.button.button<8) // на всякий случай небольшая проверка
+						SDL_MouseCurrentStatus[event.button.button] = false;
+					break;
+				case SDL_JOYBUTTONUP:
+					vw_SetWindowLBMouse(false);
+					JoysticButtons[event.jbutton.button] = false;
+					break;
 
-            case SDL_MOUSEBUTTONUP:
-                if (event.button.button ==  SDL_BUTTON_LEFT)
-                    vw_SetWindowLBMouse(false);
-                if (event.button.button ==  SDL_BUTTON_RIGHT)
-                    vw_SetWindowRBMouse(false);
-                if (event.button.button<8) // на всякий случай небольшая проверка
-                    SDL_MouseCurrentStatus[event.button.button] = false;
-                break;
-            case SDL_JOYBUTTONUP:
-                vw_SetWindowLBMouse(false);
-                JoysticButtons[event.jbutton.button] = false;
-                break;
+				case SDL_ACTIVEEVENT:
+					if(event.active.state & SDL_APPACTIVE)
+					{
+						// iconified
+						if( event.active.gain == 0 ) NeedLoop = false;
+						// restored
+						if( event.active.gain == 1 )  NeedLoop = true;
+					}
+					if(event.active.state & SDL_APPINPUTFOCUS)
+					{
+						// input focus was lost
+						if( event.active.gain == 0 ) NeedLoop = false;
+						// input focus was gained
+						if( event.active.gain == 1 )  NeedLoop = true;
+					}
+					break;
 
-            case SDL_ACTIVEEVENT:
-                if(event.active.state & SDL_APPACTIVE)
-                {
-                    // iconified
-                    if( event.active.gain == 0 ) NeedLoop = false;
-                    // restored
-                    if( event.active.gain == 1 )  NeedLoop = true;
-                }
-                if(event.active.state & SDL_APPINPUTFOCUS)
-                {
-                    // input focus was lost
-                    if( event.active.gain == 0 ) NeedLoop = false;
-                    // input focus was gained
-                    if( event.active.gain == 1 )  NeedLoop = true;
-                }
-                break;
-
-            case SDL_KEYDOWN:
-                // устанавливаем текущий юникод нажатой клавиши
-                if (event.key.keysym.unicode > 0x001F) // пропускаем С0 Сontrol Characters (ентер, бэкспейс и прочие...)
-                    if (!((event.key.keysym.unicode >= 0x007F) && (event.key.keysym.unicode <= 0x009F))) // пропускаем С1 Сontrol Characters
-                        vw_SetCurrentKeyUnicode(event.key.keysym.unicode);
+				case SDL_KEYDOWN:
+					// устанавливаем текущий юникод нажатой клавиши
+					if (event.key.keysym.unicode > 0x001F) // пропускаем С0 Сontrol Characters (ентер, бэкспейс и прочие...)
+					if (!((event.key.keysym.unicode >= 0x007F) && (event.key.keysym.unicode <= 0x009F))) // пропускаем С1 Сontrol Characters
+						vw_SetCurrentKeyUnicode(event.key.keysym.unicode);
 #ifdef gamedebug
-                printf("Keydown, Unicode: " );
-                if ( event.key.keysym.unicode < 0x80 && event.key.keysym.unicode > 0 )
-                {
-                    printf( "%c (0x%04X)\n", (char)event.key.keysym.unicode,
-                            event.key.keysym.unicode );
-                }
-                else
-                {
-                    printf( "? (0x%04X)\n", event.key.keysym.unicode );
-                }
+					printf("Keydown, Unicode: " );
+					if ( event.key.keysym.unicode < 0x80 && event.key.keysym.unicode > 0 )
+					{
+						printf( "%c (0x%04X)\n", (char)event.key.keysym.unicode,
+								event.key.keysym.unicode );
+					}
+					else
+					{
+						printf( "? (0x%04X)\n", event.key.keysym.unicode );
+					}
 #endif // gamedebug
-                break;
+					break;
 
-            case SDL_KEYUP:
-                // сбрасываем юникод
-                vw_SetCurrentKeyUnicode(0);
-                break;
-                
-            default:
-                break;
-        }
-    }
+				case SDL_KEYUP:
+					// сбрасываем юникод
+					vw_SetCurrentKeyUnicode(0);
+					break;
 
-    // если окно видемое - рисуем
-    if (NeedLoop)
-    {
+				default:
+					break;
+			}
+		}
 
-        // всегда включаем счет времени
-        vw_StartTime();
-        // переход на основную программу
-        Loop_Proc();
+		// если окно видемое - рисуем
+		if (NeedLoop)
+		{
 
-    }
-    else
-    {
-        // всегда выключаем счет времени и считаем новый лаг
-        vw_StopTime();
-        // выключаем музыку
-        if (vw_GetMusicIsPlaying()) vw_ReleaseAllMusic();
+			// всегда включаем счет времени
+			vw_StartTime();
+			// переход на основную программу
+			Loop_Proc();
 
-        // если в игре, ставим паузу, т.е. открываем меню мгновенно
-        if (GameStatus == GAME && GameContentTransp < 1.0f)
-        {
-            NeedShowGameMenu = true;
-            NeedHideGameMenu = false;
-            GameContentTransp = 1.0f;
-            vw_SetTimeThreadSpeed(1, 0.0f);
-            DrawGameCursor = true;
-        }
-    }
+		}
+		else
+		{
+			// всегда выключаем счет времени и считаем новый лаг
+			vw_StopTime();
+			// выключаем музыку
+			if (vw_GetMusicIsPlaying()) vw_ReleaseAllMusic();
 
-    SDL_GL_SwapBuffers();
+			// если в игре, ставим паузу, т.е. открываем меню мгновенно
+			if (GameStatus == GAME && GameContentTransp < 1.0f)
+			{
+				NeedShowGameMenu = true;
+				NeedHideGameMenu = false;
+				GameContentTransp = 1.0f;
+				vw_SetTimeThreadSpeed(1, 0.0f);
+				DrawGameCursor = true;
+			}
+
+			// ждем пока не поступит команда
+			SDL_WaitEvent(NULL);
+		}
+	}
+GotoQuit:
+
+	// если не выходим...
+	if (!NeedReCreate)
+	if (!CanQuit && Quit)
+	{
+		SetCurrentDialogBox(0);
+		goto loop;
+	}
+
+
+
+	if (!NeedShowSystemCursor)
+		SDL_ShowCursor(SDL_ENABLE);
+
+
+	// завершение, и освобождение памяти...
+	if (Script != 0){delete Script; Script = 0;}
+
+	RealExitGame();// удаляем объекты, они могут быть...
+	MissionsListRelease();
+	if (CursorParticleSystem2D != 0){delete CursorParticleSystem2D; CursorParticleSystem2D = 0;}
+	DestroyInfoObject();
+	WorkshopDestroyData();
+
+	if (psSpaceStatic!=0){delete psSpaceStatic; psSpaceStatic = 0;}
+
+	ReleaseAllObject3D();
+	vw_ReleaseAllModel3D();
+	vw_ReleaseAllParticleSystems();
+	vw_ReleaseAllLights();
+	ReleaseAllGameLvlText();
+
+	vw_ReleaseAllFontChars(); // (!) всегда перед vw_ReleaseAllTextures
+	vw_ReleaseAllTextures();
+	ShadowMap_Release();
+	vw_ShutdownRenderer();
+
+	// полностью выходим из SDL
+	SDL_Quit();
+	// сохраняем настройки игры
+	SaveXMLSetupFile();
+
+	// если нужно перезагрузить игру с новыми параметрами
+	if (NeedReCreate)
+	{
+		FirstStart = false;
+
+		// убираем все голосовые файлы и звуки (для изменения языка голоса)
+		// при vw_ShutdownSound освободим все, сейчас только речевые, музыка должна играть
+		vw_ReleaseAllBuffers();
+		// убираем все линки (для изменения языка меню)
+		// при vw_ShutdownVFS вообще все освободим, сейчас убираем только языковые линки на файлы
+		vw_DeleteAllLinksVFS();
+
+		// пересоздаем окно
+	    goto ReCreate;
+	}
+
+
+	if (VideoModes != 0) {delete [] VideoModes; VideoModes = 0;}
+
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// завершение, освобождение памяти...
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	if (Setup.Music_check || Setup.Sound_check)
+	{
+		vw_ShutdownSound();
+	}
+
+
+	// освобождаем память выделенную под ттф шрифт
+	vw_ShutdownFont();
+	// освобождаем весь подготовленный текст из языкового файла
+	vw_ReleaseText();
+	// закрываем файловую систему
+	vw_ShutdownVFS();
+#ifdef fontconfig
+	// освобождаем список шрифтов
+	ReleaseFontConfig();
+#endif // fontconfig
+
+	// уходим из программы...
+	return 0;
+
 }
