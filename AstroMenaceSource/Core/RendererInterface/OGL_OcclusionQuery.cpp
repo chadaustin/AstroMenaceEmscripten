@@ -43,8 +43,7 @@ bool vw_Internal_InitializationOcclusionQueries()
 //------------------------------------------------------------------------------------
 void vw_GenQueries(int n, unsigned int *ids)
 {
-	if (glGenQueriesARB == NULL) return;
-	glGenQueriesARB(n, ids);
+  return;
 }
 
 
@@ -54,8 +53,6 @@ void vw_GenQueries(int n, unsigned int *ids)
 //------------------------------------------------------------------------------------
 void vw_DeleteQueries(int n, const unsigned int *ids)
 {
-	if (glDeleteQueriesARB == NULL) return;
-	glDeleteQueriesARB(n, ids);
 }
 
 
@@ -65,8 +62,7 @@ void vw_DeleteQueries(int n, const unsigned int *ids)
 //------------------------------------------------------------------------------------
 bool vw_IsQuery(unsigned int id)
 {
-	if (glIsQueryARB == NULL) return false;
-	return glIsQueryARB(id);
+  return false;
 }
 
 
@@ -75,8 +71,6 @@ bool vw_IsQuery(unsigned int id)
 //------------------------------------------------------------------------------------
 void vw_BeginQuery(unsigned int id)
 {
-	if (glBeginQueryARB == NULL) return;
-	glBeginQueryARB(GL_SAMPLES_PASSED_ARB, id);
 }
 
 
@@ -86,8 +80,6 @@ void vw_BeginQuery(unsigned int id)
 //------------------------------------------------------------------------------------
 void vw_EndQuery()
 {
-	if (glEndQueryARB == NULL) return;
-	glEndQueryARB(GL_SAMPLES_PASSED_ARB);
 }
 
 
@@ -97,8 +89,6 @@ void vw_EndQuery()
 //------------------------------------------------------------------------------------
 void vw_GetQueryiv(unsigned int target, unsigned int pname, int *params)
 {
-	if (glGetQueryivARB == NULL) return;
-	glGetQueryivARB(target, pname, params);
 }
 
 
@@ -108,8 +98,6 @@ void vw_GetQueryiv(unsigned int target, unsigned int pname, int *params)
 //------------------------------------------------------------------------------------
 void vw_GetQueryObjectiv(unsigned int id, unsigned int pname, int *params)
 {
-	if (glGetQueryObjectivARB == NULL) return;
-	glGetQueryObjectivARB(id, pname, params);
 }
 
 
@@ -119,6 +107,4 @@ void vw_GetQueryObjectiv(unsigned int id, unsigned int pname, int *params)
 //------------------------------------------------------------------------------------
 void vw_GetQueryObjectuiv(unsigned int id, unsigned int pname, unsigned int *params)
 {
-	if (glGetQueryObjectuivARB == NULL) return;
-	glGetQueryObjectuivARB(id, pname, params);
 }

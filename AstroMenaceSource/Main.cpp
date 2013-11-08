@@ -1226,7 +1226,7 @@ ReCreate:
 	if (FirstStart) SetCurrentDialogBox(16);
 
 
-
+ loop:
 	Quit = false;
 	NeedReCreate = false;
 	bool NeedLoop = true;
@@ -1269,11 +1269,6 @@ ReCreate:
 					if (event.button.button<8) // на всякий случай небольшая проверка
 						SDL_MouseCurrentStatus[event.button.button] = true;
 					break;
-				case SDL_JOYBUTTONDOWN:
-					vw_SetWindowLBMouse(true);
-					vw_SetWindowLBDoubleMouse(true);
-					JoysticButtons[event.jbutton.button] = true;
-					break;
 
 				case SDL_MOUSEBUTTONUP:
 					if (event.button.button ==  SDL_BUTTON_LEFT)
@@ -1282,10 +1277,6 @@ ReCreate:
 						vw_SetWindowRBMouse(false);
 					if (event.button.button<8) // на всякий случай небольшая проверка
 						SDL_MouseCurrentStatus[event.button.button] = false;
-					break;
-				case SDL_JOYBUTTONUP:
-					vw_SetWindowLBMouse(false);
-					JoysticButtons[event.jbutton.button] = false;
 					break;
 
 				case SDL_ACTIVEEVENT:

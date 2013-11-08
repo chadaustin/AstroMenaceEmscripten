@@ -82,8 +82,6 @@ struct eDevCaps
 	bool GLSL100Supported;
 	// шейдерная модель
 	float ShaderModel;
-	// поддержка Occlusion Query (попадает в видимую область прорисовки)
-	bool OcclusionQuerySupported;
 };
 
 

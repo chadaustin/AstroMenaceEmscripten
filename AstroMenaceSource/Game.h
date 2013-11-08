@@ -70,7 +70,6 @@
 extern GameSetup Setup;
 extern eDevCaps *CAPS;
 extern eGameStatus GameStatus;
-extern SDL_Joystick *Joystick;
 extern eParticleSystem2D *CursorParticleSystem2D;
 extern CSpaceStars *psSpaceStatic;
 extern VECTOR3D GamePoint;
@@ -91,9 +90,6 @@ extern bool Quit;
 extern bool CanQuit;
 extern bool NeedReCreate;
 extern bool SDL_MouseCurrentStatus[8];
-extern int JoystickAxisX;
-extern int JoystickAxisY;
-extern bool JoysticButtons[100];
 
 void SaveGameData();
 void CodeXOR(char *Text, char *Key, int Count);

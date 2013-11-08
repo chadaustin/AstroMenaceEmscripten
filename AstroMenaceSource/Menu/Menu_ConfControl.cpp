@@ -339,12 +339,11 @@ void ConfControlMenu(float ContentTransp, float *ButtonTransp1, float *LastButto
 	Transp = 1.0f;
 	Off = false;
 	if (NeedCheck == 9) {Transp = But[8]; Off = true;};
-	if (DrawButton128_2((int)X1+616, (int)Y1-6, JoystickCodeName(Setup.JoystickPrimary), Transp*ContentTransp, !(Joystick != NULL) || Off))
+	if (DrawButton128_2((int)X1+616, (int)Y1-6, JoystickCodeName(Setup.JoystickPrimary), Transp*ContentTransp, true || Off))
 	if (NeedCheck == 0)
 	{
 		Setup.JoystickPrimary = -1;
 		NeedCheck = 9;
-		for (int i=0; i<100; i++) JoysticButtons[i] = false;
 	}
 
 
@@ -374,12 +373,11 @@ void ConfControlMenu(float ContentTransp, float *ButtonTransp1, float *LastButto
 	Transp = 1.0f;
 	Off = false;
 	if (NeedCheck == 10) {Transp = But[9]; Off = true;};
-	if (DrawButton128_2((int)X1+616, (int)Y1-6, JoystickCodeName(Setup.JoystickSecondary), Transp*ContentTransp, !(Joystick != NULL) || Off))
+	if (DrawButton128_2((int)X1+616, (int)Y1-6, JoystickCodeName(Setup.JoystickSecondary), Transp*ContentTransp, true || Off))
 	if (NeedCheck == 0)
 	{
 		Setup.JoystickSecondary = -1;
 		NeedCheck = 10;
-		for (int i=0; i<100; i++) JoysticButtons[i] = false;
 	}
 
 

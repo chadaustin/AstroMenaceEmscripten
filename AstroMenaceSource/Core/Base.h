@@ -51,10 +51,10 @@
 	#include <OpenGL/glu.h>	// Header File For The GLu Library
 	#undef __glext_h_
 #else
-	#define __glext_h_  // Don't let gl.h include glext.h
+        #define GL_GLEXT_PROTOTYPES 1
 	#include <GL/gl.h>	// Header File For The OpenGL Library
 	#include <GL/glu.h>	// Header File For The GLu Library
-	#undef __glext_h_
+        #include <GL/glext.h>
 #endif
 
 #include <stdlib.h> // rand, ...
