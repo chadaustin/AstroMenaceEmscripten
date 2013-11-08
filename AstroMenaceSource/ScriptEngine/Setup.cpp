@@ -136,7 +136,6 @@ void InitSetup()
 
 
 	// всегда включен по умолчанию, если что железо само поймет что ему надо
-	Setup.VBOCoreMode = 1;
 	Setup.FBOCoreMode = 1;
 	// по умолчанию всегда меньше 128 метров
 	Setup.EqualOrMore128MBVideoRAM = false;
@@ -198,7 +197,6 @@ void SaveXMLSetupFile()
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "CameraModeWithStandardAspectRatio"), "value", Setup.CameraModeWithStandardAspectRatio);
 
 	XMLdoc->AddComment(RootXMLEntry, " Don't change this setting unless you know what you are doing ");
-	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "VBOCoreMode"), "value", Setup.VBOCoreMode);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "FBOCoreMode"), "value", Setup.FBOCoreMode);
 	XMLdoc->AddComment(RootXMLEntry, " If your video card have 128+ MB VRAM on board - turn it on ");
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "EqualOrMore128MBVideoRAM"), "value", Setup.EqualOrMore128MBVideoRAM);
@@ -524,9 +522,6 @@ bool LoadXMLSetupFile(bool NeedSafeMode)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "CameraModeWithStandardAspectRatio"), "value") != 0)
 			Setup.CameraModeWithStandardAspectRatio = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "CameraModeWithStandardAspectRatio"), "value");
 
-	if (XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode") != 0)
-		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode"), "value") != 0)
-			Setup.VBOCoreMode = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "VBOCoreMode"), "value");
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode"), "value") != 0)
 			Setup.FBOCoreMode = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "FBOCoreMode"), "value");

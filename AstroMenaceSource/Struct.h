@@ -338,7 +338,6 @@ struct GameSetup
 
 
 	// параметры управление движком игры
-	int		VBOCoreMode;
 	int		FBOCoreMode;
 	// тип работы с видео памятью, больше или нет 128 мегабайт
 	bool	EqualOrMore128MBVideoRAM;

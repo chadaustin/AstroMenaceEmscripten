@@ -1022,16 +1022,6 @@ ReCreate:
 
 	CAPS = vw_GetDevCaps();
 
-	// если нужно, устанавливаем перерытие значений внутри движка, може только выключить - включить то чего нет нельзя
-#ifndef vbo // принудительно отключаем вообще работу с vbo
-	CAPS->VBOSupported = false;
-	printf("Vertex Buffer support forced disabled.\n");
-#endif
-	if (Setup.VBOCoreMode == 0)
-	{
-		CAPS->VBOSupported = false;
-	}
-
 	// если нужно, выключаем fbo
 #ifndef fbo // принудительно отключаем вообще работу с fbo
 	CAPS->FramebufferObject = false;

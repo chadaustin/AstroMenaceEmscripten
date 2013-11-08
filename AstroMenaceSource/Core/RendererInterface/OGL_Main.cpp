@@ -232,7 +232,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.MaxTextureHeight = 0;
 	OpenGL_DevCaps.MaxActiveLights = 0;
 	OpenGL_DevCaps.MaxAnisotropyLevel = 0;
-	OpenGL_DevCaps.VBOSupported = false;
 	OpenGL_DevCaps.GLSL100Supported = false;
 	OpenGL_DevCaps.ShaderModel = 0;
 	OpenGL_DevCaps.FramebufferObject = false;
@@ -280,13 +279,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 		// получим максимально доступный угол анизотропии...
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,&OpenGL_DevCaps.MaxAnisotropyLevel);
 		printf("Max anisotropy: %i\n", OpenGL_DevCaps.MaxAnisotropyLevel);
-	}
-
-	// проверем поддержку VBO
-	if (ExtensionSupported("GL_ARB_vertex_buffer_object"))
-	{
-		OpenGL_DevCaps.VBOSupported = true;
-		printf("Vertex Buffer support enabled.\n");
 	}
 
 	// проверяем, есть ли поддержка GL_ARB_framebuffer_object (GL_EXT_framebuffer_object+GL_EXT_framebuffer_multisample+GL_EXT_framebuffer_blit)
@@ -430,7 +422,7 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 	// иним шейдеры
 	if (OpenGL_DevCaps.GLSL100Supported) OpenGL_DevCaps.GLSL100Supported = vw_Internal_InitializationGLSL();
 	// иним вбо
-	if (OpenGL_DevCaps.VBOSupported) OpenGL_DevCaps.VBOSupported = vw_Internal_InitializationVBO();
+	vw_Internal_InitializationVBO();
 	// инициализируем FBO
 	if (OpenGL_DevCaps.FramebufferObject)
 	{

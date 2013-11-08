@@ -76,7 +76,7 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 	if (Data == 0 && VBO == 0) return 0;
 
 	// флаг нужно ли с вбо делать
-	bool NeedVBO = OpenGL_DevCaps.VBOSupported;
+	bool NeedVBO = true;
 	if (VBO == 0) NeedVBO = false;
 
 
@@ -236,7 +236,7 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 			for (unsigned int i=0; i<NumVertices+RangeStart; i++) VertexIndex[i] = i;
 
 			// если держим VBO, все это один раз сразу запихиваем в видео память
-			if (OpenGL_DevCaps.VBOSupported)
+			if (true)
 			{
 				// прежде всего удаляем старый буфер, если он был
 				if (IndexVBO != 0){vw_DeleteVBO(*IndexVBO); delete IndexVBO; IndexVBO=0;}
@@ -252,7 +252,7 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 		VertexIndexPointer = VertexIndex+RangeStart;
 
 		// собственно включаем индекс-вбо
-		if (OpenGL_DevCaps.VBOSupported)
+		if (true)
 		if (IndexVBO != 0)
 		{
 			vw_BindVBO(RI_ELEMENT_ARRAY_BUFFER, *IndexVBO);
@@ -265,7 +265,7 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 		VertexIndexPointer = DataIndex+RangeStart;
 
 		// собственно включаем индекс-вбо
-		if (OpenGL_DevCaps.VBOSupported)
+		if (true)
 		if (DataIndexVBO != 0)
 		{
 			vw_BindVBO(RI_ELEMENT_ARRAY_BUFFER, *DataIndexVBO);
@@ -290,7 +290,7 @@ void vw_SendVertices_DisableStatesAndPointers(int DataFormat, unsigned int *VBO,
 	// флаг нужно ли с вaо делать
 	{
 		// флаг нужно ли с вбо делать
-		bool NeedVBO = OpenGL_DevCaps.VBOSupported;
+		bool NeedVBO = true;
 		if (VBO == 0) NeedVBO = false;
 
 
