@@ -242,7 +242,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.GLSL100Supported = false;
 	OpenGL_DevCaps.ShaderModel = 0;
 	OpenGL_DevCaps.OcclusionQuerySupported = false;
-	OpenGL_DevCaps.HardwareMipMapGeneration = false;
 	OpenGL_DevCaps.TextureStorage = false;
 	OpenGL_DevCaps.FramebufferObject = false;
 	OpenGL_DevCaps.FramebufferObjectDepthSize = 0;
@@ -326,12 +325,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	{
 		OpenGL_DevCaps.OcclusionQuerySupported = true;
 		printf("Occlusion Query support enabled.\n");
-	}
-
-	// проверяем, есть ли поддержка SGIS_generate_mipmap (хардварная генерация мипмеп уровней)
-	if (ExtensionSupported("SGIS_generate_mipmap"))
-	{
-		OpenGL_DevCaps.HardwareMipMapGeneration = true;
 	}
 
 	// проверяем, есть ли поддержка GL_ARB_framebuffer_object (GL_EXT_framebuffer_object+GL_EXT_framebuffer_multisample+GL_EXT_framebuffer_blit)

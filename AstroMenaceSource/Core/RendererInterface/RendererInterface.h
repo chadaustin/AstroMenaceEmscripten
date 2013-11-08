@@ -84,8 +84,6 @@ struct eDevCaps
 	float ShaderModel;
 	// поддержка Occlusion Query (попадает в видимую область прорисовки)
 	bool OcclusionQuerySupported;
-	// поддержка генерации мипмеп в железе
-	bool HardwareMipMapGeneration;
 };
 
 

@@ -1058,12 +1058,6 @@ ReCreate:
 	if (Setup.UseGLSL)
 		if (!CAPS->GLSL100Supported || CAPS->ShaderModel < 3.0f) Setup.UseGLSL = false;
 
-	// управление генерации мипмеп уровней- можем только выключить, нельзя включить если его нет
-	if (!Setup.HardwareMipMapGeneration)
-	{
-		CAPS->HardwareMipMapGeneration = false;
-	}
-
 	// анализ системы только если это первый запуск
 	if (FirstStart)
 	{
@@ -1232,9 +1226,6 @@ ReCreate:
 	// если первый запуск игры - предлогаем выбор языка
 	if (FirstStart) SetCurrentDialogBox(16);
 
-
-
-loop:
 
 
 	Quit = false;

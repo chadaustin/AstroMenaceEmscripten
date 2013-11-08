@@ -345,8 +345,6 @@ struct GameSetup
 	int		FBOCoreMode;
 	// тип работы с видео памятью, больше или нет 128 мегабайт
 	bool	EqualOrMore128MBVideoRAM;
-	// работа с хардварной генерацией мипмеп уровней
-	bool	HardwareMipMapGeneration;
 };
 
 

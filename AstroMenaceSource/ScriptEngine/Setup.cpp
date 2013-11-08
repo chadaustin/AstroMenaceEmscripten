@@ -143,8 +143,6 @@ void InitSetup()
 	Setup.VAOCoreMode = 0;
 	// по умолчанию всегда меньше 128 метров
 	Setup.EqualOrMore128MBVideoRAM = false;
-	// по умолчанию генерируем в видео карте (после иниц. окна поставим правильное), по крайней мере в виндовс немного быстрее
-	Setup.HardwareMipMapGeneration = true;
 }
 
 
@@ -209,7 +207,6 @@ void SaveXMLSetupFile()
 	XMLdoc->AddComment(RootXMLEntry, " If your video card have 128+ MB VRAM on board - turn it on ");
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "EqualOrMore128MBVideoRAM"), "value", Setup.EqualOrMore128MBVideoRAM);
 	XMLdoc->AddComment(RootXMLEntry, " Don't change this setting unless you know what you are doing ");
-	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "HardwareMipMapGeneration"), "value", Setup.HardwareMipMapGeneration);
 
 
 	XMLdoc->AddComment(RootXMLEntry, " Common settings ");
@@ -544,9 +541,6 @@ bool LoadXMLSetupFile(bool NeedSafeMode)
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "EqualOrMore128MBVideoRAM") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "EqualOrMore128MBVideoRAM"), "value") != 0)
 			Setup.EqualOrMore128MBVideoRAM = XMLdoc->bGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "EqualOrMore128MBVideoRAM"), "value");
-	if (XMLdoc->FindEntryByName(RootXMLEntry, "HardwareMipMapGeneration") != 0)
-		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "HardwareMipMapGeneration"), "value") != 0)
-			Setup.HardwareMipMapGeneration = XMLdoc->bGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "HardwareMipMapGeneration"), "value");
 
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "TextureFilteringMode") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "TextureFilteringMode"), "value") != 0)
