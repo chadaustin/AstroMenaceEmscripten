@@ -1061,8 +1061,6 @@ ReCreate:
 			// 100% держит наши шейдеры
 			Setup.UseGLSL = true;
 			Setup.ShadowMap = 2;
-			// 100% больше чем нужно памяти и не надо сжимать текстуры (ув. качество и скорость загрузки)
-			Setup.TexturesCompressionType = 0;
 			// немного больше ставим другие опции
 			Setup.MSAA = 2;
 			Setup.CSAA = 2;
@@ -1078,9 +1076,6 @@ ReCreate:
 			Setup.CSAA = 4;
 			Setup.MaxPointLights = 6;
 		}
-
-		// если поддерживаем сторедж - выключаем поддержку сжатия, 100% у нас достаточно видео памяти
-		if (CAPS->TextureStorage) Setup.TexturesCompressionType = 0;
 
 #if defined(__APPLE__) && defined(__MACH__)
 		// для маков по умолчанию выключаем сглаживание, тени и шейдеры, т.к. там может все софтово эмулироваться и жутко тормозить
@@ -1109,15 +1104,6 @@ ReCreate:
 
 	// если не поддерживает железо фбо или шейдеры, выключаем шадовмеп
 	if (!CAPS->FramebufferObject || !CAPS->GLSL100Supported || (CAPS->ShaderModel < 3.0f)) Setup.ShadowMap = 0;
-
-	// проверка режима сжатия текстур
-	if (!CAPS->TexturesCompression && (Setup.TexturesCompressionType > 0)) Setup.TexturesCompressionType = 0;
-	if (!CAPS->TexturesCompressionBPTC && (Setup.TexturesCompressionType > 1)) Setup.TexturesCompressionType = 1;
-
-
-
-
-
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// завершаем инициализацию

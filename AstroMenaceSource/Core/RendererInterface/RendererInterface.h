@@ -50,12 +50,6 @@ struct eDevCaps
 	int MaxActiveLights;
 	// максимальный уровень анизотропии
 	int MaxAnisotropyLevel;
-	// есть ли возможность включить сжатие текстур
-	bool TexturesCompression;
-	// поддержка GL_ARB_texture_compression_bptc
-	bool TexturesCompressionBPTC;
-	// GL_ARB_texture_storage
-	bool TextureStorage;
 	// поддержка FBO
 	bool FramebufferObject;
 	// глубина depth буфера в битах, получаем ее при первой генерации fbo с буфером глубины, по умолчанию 0

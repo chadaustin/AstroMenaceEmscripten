@@ -232,12 +232,9 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.MaxTextureHeight = 0;
 	OpenGL_DevCaps.MaxActiveLights = 0;
 	OpenGL_DevCaps.MaxAnisotropyLevel = 0;
-	OpenGL_DevCaps.TexturesCompression = false;
-	OpenGL_DevCaps.TexturesCompressionBPTC = false;
 	OpenGL_DevCaps.VBOSupported = false;
 	OpenGL_DevCaps.GLSL100Supported = false;
 	OpenGL_DevCaps.ShaderModel = 0;
-	OpenGL_DevCaps.TextureStorage = false;
 	OpenGL_DevCaps.FramebufferObject = false;
 	OpenGL_DevCaps.FramebufferObjectDepthSize = 0;
 
@@ -292,18 +289,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 		printf("Vertex Buffer support enabled.\n");
 	}
 
-	// проверяем, есть ли поддержка компрессии текстур
-	if (ExtensionSupported("GL_ARB_texture_compression") && ExtensionSupported("GL_EXT_texture_compression_s3tc"))
-	{
-		OpenGL_DevCaps.TexturesCompression = true;
-		printf("Textures S3TC compression support enabled.\n");
-	}
-	if (ExtensionSupported("GL_ARB_texture_compression") && ExtensionSupported("GL_ARB_texture_compression_bptc"))
-	{
-		OpenGL_DevCaps.TexturesCompressionBPTC = true;
-		printf("Textures BPTC compression support enabled.\n");
-	}
-
 	// проверяем, есть ли поддержка GL_ARB_framebuffer_object (GL_EXT_framebuffer_object+GL_EXT_framebuffer_multisample+GL_EXT_framebuffer_blit)
 	if (ExtensionSupported("GL_ARB_framebuffer_object") ||
 		(ExtensionSupported("GL_EXT_framebuffer_blit") && ExtensionSupported("GL_EXT_framebuffer_multisample") && ExtensionSupported("GL_EXT_framebuffer_object")))
@@ -311,14 +296,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 		OpenGL_DevCaps.FramebufferObject = true;
 		printf("Frame Buffer Object support enabled.\n");
 	}
-
-	// проверяем, есть ли поддержка GL_ARB_texture_storage или GL_EXT_texture_storage
-	if (ExtensionSupported("GL_ARB_texture_storage") || ExtensionSupported("GL_EXT_texture_storage"))
-	{
-		OpenGL_DevCaps.TextureStorage = true;
-		printf("Texture Storage support enabled.\n");
-	}
-
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// шейдеры

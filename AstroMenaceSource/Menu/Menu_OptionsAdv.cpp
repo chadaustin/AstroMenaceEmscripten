@@ -270,13 +270,12 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 	Y1 += Prir1;
 	vw_DrawFont(X1, Y1, -280, 0, 1.0f, 0.0f,1.0f,0.0f, ContentTransp, vw_GetText("3_Textures_Compression"));
 	int MaxCompressionCount = 1;
-	if (CAPS->TexturesCompressionBPTC) MaxCompressionCount = 2;
-	if (DrawButton128_2(X1+300, Y1-6, vw_GetText("1_Prev"), ContentTransp, !CAPS->TexturesCompression || (Options_TexturesCompressionType <= 0)))
+	if (DrawButton128_2(X1+300, Y1-6, vw_GetText("1_Prev"), ContentTransp, !false || (Options_TexturesCompressionType <= 0)))
 	{
 		Options_TexturesCompressionType--;
 		if (Options_TexturesCompressionType < 0) Options_TexturesCompressionType = 0;
 	}
-	if (DrawButton128_2(X1+616, Y1-6, vw_GetText("1_Next"), ContentTransp, !CAPS->TexturesCompression || (Options_TexturesCompressionType >= MaxCompressionCount)))
+	if (DrawButton128_2(X1+616, Y1-6, vw_GetText("1_Next"), ContentTransp, !false || (Options_TexturesCompressionType >= MaxCompressionCount)))
 	{
 		Options_TexturesCompressionType++;
 		if (Options_TexturesCompressionType > MaxCompressionCount) Options_TexturesCompressionType = MaxCompressionCount;
@@ -486,7 +485,7 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 
 
 
-	if (Options_TexturesCompressionType == Setup.TexturesCompressionType &&
+	if (Options_TexturesCompressionType == 0 &&
 		Options_MSAA == Setup.MSAA &&
 		Options_CSAA == Setup.CSAA &&
 		Options_UseGLSL == Setup.UseGLSL &&
@@ -532,7 +531,7 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 		if (DrawButton256(X,Y, vw_GetText("1_APPLY"), ContentTransp, ButtonTransp2, LastButtonUpdateTime2))
 		{
 			// проверяем, нужно перегружать или нет
-			if (Options_TexturesCompressionType != Setup.TexturesCompressionType ||
+			if (Options_TexturesCompressionType != 0 ||
 				Options_MSAA != Setup.MSAA ||
 				Options_CSAA != Setup.CSAA ||
 				Options_UseGLSL != Setup.UseGLSL ||
@@ -556,7 +555,6 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 void SaveOptionsAdvMenuTmpData()
 {
 	Setup.UseGLSL = Options_UseGLSL;
-	Setup.TexturesCompressionType = Options_TexturesCompressionType;
 	Setup.MSAA = Options_MSAA;
 	Setup.CSAA = Options_CSAA;
 	Setup.ShadowMap = Options_ShadowMap;

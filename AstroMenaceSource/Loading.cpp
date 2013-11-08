@@ -1552,7 +1552,7 @@ void LoadGameData(int LoadType)
 					vw_SetTextureProp(CurrentList[i].TextFiltr, CurrentList[i].TextWrap,
 						CurrentList[i].Alpha, CurrentList[i].AlphaMode, CurrentList[i].MipMap);
 
-					vw_LoadTexture(CurrentList[i].FileName, NULL, CurrentList[i].NeedCompression ? Setup.TexturesCompressionType : 0);
+					vw_LoadTexture(CurrentList[i].FileName, NULL, CurrentList[i].NeedCompression ? 0 : 0);
 				}
 				break;
 
@@ -1631,7 +1631,7 @@ void LoadGameData(int LoadType)
 					// если это карта нормалей, но у нас не включены шейдеры - пропускаем
 					if (!strncmp("DATA/MODELS/NORMALMAP", CurrentList[i].FileName, strlen("DATA/MODELS/NORMALMAP")) && !Setup.UseGLSL) break;
 
-					vw_LoadTexture(CurrentList[i].FileName, NULL, CurrentList[i].NeedCompression ? Setup.TexturesCompressionType : 0, AUTO_FILE, W, H);
+					vw_LoadTexture(CurrentList[i].FileName, NULL, CurrentList[i].NeedCompression ? 0 : 0, AUTO_FILE, W, H);
 				}
 				break;
 

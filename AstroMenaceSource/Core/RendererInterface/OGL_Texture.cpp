@@ -46,26 +46,6 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 	eDevCaps *OpenGL_DevCaps = vw_GetDevCaps();
 
 
-	if (OpenGL_DevCaps->TexturesCompression && (CompressionType > 0))
-	{
-		if (Bytes == 4)
-		{
-			Format = GL_RGBA;
-			if (OpenGL_DevCaps->TexturesCompressionBPTC && (CompressionType > 1))
-				InternalFormat = GL_COMPRESSED_RGBA_BPTC_UNORM_ARB;
-			else
-				InternalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-		}
-		else
-		{
-			Format = GL_RGB;
-			if (OpenGL_DevCaps->TexturesCompressionBPTC && (CompressionType > 1))
-				InternalFormat = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB;
-			else
-				InternalFormat = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-		}
-	}
-	else
 	{
 		if (Bytes == 4)
 		{
