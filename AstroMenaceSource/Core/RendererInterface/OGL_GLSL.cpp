@@ -76,16 +76,13 @@ int CheckOGLError()
 //------------------------------------------------------------------------------------
 void vw_PrintShaderInfoLog(GLuint shader, const char *ShaderName)
 {
-	if (glGetObjectParameterivARB == NULL) return;
-	if (glGetInfoLogARB == NULL) return;
-
     int infologLength = 0;
     int charsWritten  = 0;
     GLchar *infoLog;
 
     CheckOGLError();  // Check for OpenGL errors
 
-    glGetObjectParameterivARB(shader, GL_INFO_LOG_LENGTH, &infologLength);
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infologLength);
 
     CheckOGLError();  // Check for OpenGL errors
 
@@ -97,7 +94,7 @@ void vw_PrintShaderInfoLog(GLuint shader, const char *ShaderName)
             fprintf(stderr, "ERROR: Could not allocate InfoLog buffer\n");
             return;
         }
-        glGetInfoLogARB(shader, infologLength, &charsWritten, infoLog);
+        glGetShaderInfoLog(shader, infologLength, &charsWritten, infoLog);
         if (strlen(infoLog) >1)
 			printf("Shader InfoLog %s:\n%s\n\n", ShaderName, infoLog);
         free(infoLog);
@@ -108,16 +105,13 @@ void vw_PrintShaderInfoLog(GLuint shader, const char *ShaderName)
 
 void vw_PrintProgramInfoLog(GLuint program)
 {
-	if (glGetObjectParameterivARB == NULL) return;
-	if (glGetInfoLogARB == NULL) return;
-
     int infologLength = 0;
     int charsWritten  = 0;
     GLchar *infoLog;
 
     CheckOGLError();  // Check for OpenGL errors
 
-    glGetObjectParameterivARB(program, GL_INFO_LOG_LENGTH, &infologLength);
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infologLength);
 
     CheckOGLError();  // Check for OpenGL errors
 
@@ -129,7 +123,7 @@ void vw_PrintProgramInfoLog(GLuint program)
             printf("ERROR: Could not allocate InfoLog buffer\n");
             exit(1);
         }
-        glGetInfoLogARB(program, infologLength, &charsWritten, infoLog);
+        glGetProgramInfoLog(program, infologLength, &charsWritten, infoLog);
         if (strlen(infoLog) >1)
 			printf("Program InfoLog:\n%s\n\n", infoLog);
         free(infoLog);
@@ -147,18 +141,16 @@ void vw_PrintProgramInfoLog(GLuint program)
 void vw_ReleaseShader(eGLSL *GLSL)
 {
 	if (GLSL == 0) return;
-	if (glDetachObjectARB == NULL) return;
-	if (glDeleteObjectARB == NULL) return;
 
 	vw_DetachShader(GLSL);
 
 	// открепляем хидеры шейдеров
-	if (GLSL->VertexShaderUse) glDetachObjectARB(GLSL->Program, GLSL->VertexShader);
-	if (GLSL->FragmentShaderUse) glDetachObjectARB(GLSL->Program, GLSL->FragmentShader);
+	if (GLSL->VertexShaderUse) glDetachShader(GLSL->Program, GLSL->VertexShader);
+	if (GLSL->FragmentShaderUse) glDetachShader(GLSL->Program, GLSL->FragmentShader);
 	// удаляем
-	glDeleteObjectARB(GLSL->VertexShader);
-	glDeleteObjectARB(GLSL->FragmentShader);
-	glDeleteObjectARB(GLSL->Program);
+	glDeleteShader(GLSL->VertexShader);
+	glDeleteShader(GLSL->FragmentShader);
+	glDeleteProgram(GLSL->Program);
 
 	if (GLSL->Name != 0){delete [] GLSL->Name; GLSL->Name = 0;}
 
@@ -321,12 +313,6 @@ eGLSL* vw_FindShaderByName(const char *Name)
 //------------------------------------------------------------------------------------
 eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName, const char *FragmentShaderFileName)
 {
-	if (glCreateShaderObjectARB == NULL) return 0;
-	if (glShaderSourceARB == NULL) return 0;
-	if (glCompileShaderARB == NULL) return 0;
-	if (glCreateProgramObjectARB == NULL) return 0;
-	if (glAttachObjectARB == NULL) return 0;
-	if (glGetObjectParameterivARB == NULL) return 0;
 	if (VertexShaderFileName == 0 && FragmentShaderFileName == 0) return 0;
 
 
@@ -338,8 +324,8 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 	if (GLSLtmp == 0) return 0;
 
 	// создаем пустые объекты и получаем хидеры на них
-    GLSLtmp->VertexShader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-    GLSLtmp->FragmentShader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+    GLSLtmp->VertexShader = glCreateShader(GL_VERTEX_SHADER_ARB);
+    GLSLtmp->FragmentShader = glCreateShader(GL_FRAGMENT_SHADER_ARB);
 
 
 	// загружаем данные в пустые шейдеры
@@ -354,7 +340,7 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 		if (VertexFile != 0)
 		{
 			const GLcharARB *TmpGLcharARB =  (const GLcharARB *)VertexFile->Data;
-			glShaderSourceARB(GLSLtmp->VertexShader, 1, &TmpGLcharARB, &VertexFile->RealLength);
+			glShaderSource(GLSLtmp->VertexShader, 1, &TmpGLcharARB, &VertexFile->RealLength);
 			vw_fclose(VertexFile);
 			GLSLtmp->VertexShaderUse = true;
 		}
@@ -369,7 +355,7 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 		if (FragmentFile != 0)
 		{
 			const GLcharARB *TmpGLcharARB =  (const GLcharARB *)FragmentFile->Data;
-			glShaderSourceARB(GLSLtmp->FragmentShader, 1, &TmpGLcharARB, &FragmentFile->RealLength);
+			glShaderSource(GLSLtmp->FragmentShader, 1, &TmpGLcharARB, &FragmentFile->RealLength);
 			vw_fclose(FragmentFile);
 			GLSLtmp->FragmentShaderUse = true;
 		}
@@ -380,18 +366,18 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 
 	if (GLSLtmp->VertexShaderUse)
 	{
-		glCompileShaderARB(GLSLtmp->VertexShader);
+		glCompileShader(GLSLtmp->VertexShader);
 		CheckOGLError();  // Check for OpenGL errors
-		glGetObjectParameterivARB(GLSLtmp->VertexShader, GL_COMPILE_STATUS, &vertCompiled);
+		glGetShaderiv(GLSLtmp->VertexShader, GL_COMPILE_STATUS, &vertCompiled);
 		vw_PrintShaderInfoLog(GLSLtmp->VertexShader, VertexShaderFileName);
 
 		if (!vertCompiled)	return 0;
 	}
 	if (GLSLtmp->FragmentShaderUse)
 	{
-		glCompileShaderARB(GLSLtmp->FragmentShader);
+		glCompileShader(GLSLtmp->FragmentShader);
 		CheckOGLError();  // Check for OpenGL errors
-		glGetObjectParameterivARB(GLSLtmp->FragmentShader, GL_COMPILE_STATUS, &fragCompiled);
+		glGetShaderiv(GLSLtmp->FragmentShader, GL_COMPILE_STATUS, &fragCompiled);
 		vw_PrintShaderInfoLog(GLSLtmp->FragmentShader, FragmentShaderFileName);
 
 		if (!fragCompiled)	return 0;
@@ -399,9 +385,9 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 
 
     // создаем программу, чтобы подключить эти шейдеры
-    GLSLtmp->Program = glCreateProgramObjectARB();
-    if (GLSLtmp->VertexShaderUse) glAttachObjectARB(GLSLtmp->Program, GLSLtmp->VertexShader);
-    if (GLSLtmp->FragmentShaderUse) glAttachObjectARB(GLSLtmp->Program, GLSLtmp->FragmentShader);
+    GLSLtmp->Program = glCreateProgram();
+    if (GLSLtmp->VertexShaderUse) glAttachShader(GLSLtmp->Program, GLSLtmp->VertexShader);
+    if (GLSLtmp->FragmentShaderUse) glAttachShader(GLSLtmp->Program, GLSLtmp->FragmentShader);
 
 
 	if (VertexShaderFileName == 0)
@@ -440,14 +426,12 @@ eGLSL *vw_CreateShader(const char *ShaderName, const char *VertexShaderFileName,
 bool vw_LinkShaderProgram(eGLSL *GLSL)
 {
 	if (GLSL == 0) return false;
-	if (glLinkProgramARB == NULL) return false;
-	if (glGetObjectParameterivARB == NULL) return false;
 
     GLint linked;
 
-    glLinkProgramARB(GLSL->Program);
+    glLinkProgram(GLSL->Program);
     CheckOGLError();  // Check for OpenGL errors
-    glGetObjectParameterivARB(GLSL->Program, GL_LINK_STATUS, &linked);
+    glGetProgramiv(GLSL->Program, GL_LINK_STATUS, &linked);
     vw_PrintProgramInfoLog(GLSL->Program);
 
     if (!linked)
@@ -466,9 +450,8 @@ bool vw_LinkShaderProgram(eGLSL *GLSL)
 bool vw_UseShaderProgram(eGLSL *GLSL)
 {
 	if (GLSL == 0) return false;
-	if (glUseProgramObjectARB == NULL) return false;
 
-    glUseProgramObjectARB(GLSL->Program);
+    glUseProgram(GLSL->Program);
     CheckOGLError();
 
 	return true;
@@ -483,9 +466,8 @@ bool vw_UseShaderProgram(eGLSL *GLSL)
 //------------------------------------------------------------------------------------
 bool vw_StopShaderProgram()
 {
-	if (glUseProgramObjectARB == NULL) return false;
 
-    glUseProgramObjectARB(0);
+    glUseProgram(0);
     CheckOGLError();
 
 	return true;
@@ -500,11 +482,10 @@ bool vw_StopShaderProgram()
 //------------------------------------------------------------------------------------
 int vw_GetUniformLocation(eGLSL *GLSL, const char *name)
 {
-	if (glGetUniformLocationARB == NULL) return -1;
 
     int loc;
 
-    loc = glGetUniformLocationARB(GLSL->Program, name);
+    loc = glGetUniformLocation(GLSL->Program, name);
 
     if (loc == -1)
         fprintf(stderr, "No such uniform named \"%s\"\n", name);
@@ -522,9 +503,8 @@ int vw_GetUniformLocation(eGLSL *GLSL, const char *name)
 bool vw_Uniform1i(eGLSL *GLSL, int UniformLocation, int data)
 {
 	if (GLSL == 0) return false;
-	if (glUniform1iARB == NULL) return false;
 
-	glUniform1iARB(UniformLocation, data);
+	glUniform1i(UniformLocation, data);
 
 	CheckOGLError();  // Check for OpenGL errors
 
@@ -545,9 +525,8 @@ bool vw_Uniform1i(eGLSL *GLSL, const char *name, int data)
 bool vw_Uniform1f(eGLSL *GLSL, int UniformLocation, float data)
 {
 	if (GLSL == 0) return false;
-	if (glUniform3fARB == NULL) return false;
 
-	glUniform1fARB(UniformLocation, data);
+	glUniform1f(UniformLocation, data);
 
 	CheckOGLError();  // Check for OpenGL errors
 
@@ -568,9 +547,8 @@ bool vw_Uniform1f(eGLSL *GLSL, const char *name, float data)
 bool vw_Uniform3f(eGLSL *GLSL, int UniformLocation, float data1, float data2, float data3)
 {
 	if (GLSL == 0) return false;
-	if (glUniform3fARB == NULL) return false;
 
-	glUniform3fARB(UniformLocation, data1, data2, data3);
+	glUniform3f(UniformLocation, data1, data2, data3);
 
 	CheckOGLError();  // Check for OpenGL errors
 
@@ -591,9 +569,8 @@ bool vw_Uniform3f(eGLSL *GLSL, const char *name, float data1, float data2, float
 bool vw_Uniform1fv(eGLSL *GLSL, int UniformLocation, int count, float *data)
 {
 	if (GLSL == 0) return false;
-	if (glUniform1fvARB == NULL) return false;
 
-	glUniform1fvARB(UniformLocation, count, data);
+	glUniform1fv(UniformLocation, count, data);
 
 	CheckOGLError();  // Check for OpenGL errors
 
@@ -614,9 +591,8 @@ bool vw_Uniform1fv(eGLSL *GLSL, const char *name, int count, float *data)
 bool vw_Uniform4fv(eGLSL *GLSL, int UniformLocation, int count, float *data)
 {
 	if (GLSL == 0) return false;
-	if (glUniform4fvARB == NULL) return false;
 
-	glUniform4fvARB(UniformLocation, count, data);
+	glUniform4fv(UniformLocation, count, data);
 
 	CheckOGLError();  // Check for OpenGL errors
 
@@ -637,9 +613,8 @@ bool vw_Uniform4fv(eGLSL *GLSL, const char *name, int count, float *data)
 bool vw_UniformMatrix4fv(eGLSL *GLSL, int UniformLocation, bool transpose, int count, float *data)
 {
 	if (GLSL == 0) return false;
-	if (glUniformMatrix4fvARB == NULL) return false;
 
-	glUniformMatrix4fvARB(UniformLocation, count, transpose, data);
+	glUniformMatrix4fv(UniformLocation, count, transpose, data);
 
 	CheckOGLError();  // Check for OpenGL errors
 

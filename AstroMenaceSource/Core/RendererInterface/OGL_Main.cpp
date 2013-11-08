@@ -533,15 +533,6 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 		}
 	}
 
-	if (OpenGL_DevCaps.TextureStorage)
-	{
-		if (glTexStorage2DEXT == NULL)
-		{
-			OpenGL_DevCaps.TextureStorage = false;
-			fprintf(stderr, "Can't get proc address for glTexStorage2DEXT.\n\n");
-		}
-	}
-
 	// инициализация индекс буфера
 	vw_Internal_InitializationIndexBufferData();
 	// иним шейдеры

@@ -30,7 +30,6 @@
 
 
 extern	int tmpPrimCountGL;
-extern	PFNGLCLIENTACTIVETEXTUREARBPROC	glClientActiveTexture_ARB;
 extern	eDevCaps OpenGL_DevCaps;
 
 
@@ -191,7 +190,7 @@ GLuint *vw_SendVertices_EnableStatesAndPointers(int NumVertices, int DataFormat,
 	{
 		for (int i=0; i<TextQ; i++)
 		{
-			if (glClientActiveTexture_ARB != 0) glClientActiveTexture_ARB(GL_TEXTURE0+i);
+			glClientActiveTexture(GL_TEXTURE0+i);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 			switch (TextCoordType)
@@ -311,7 +310,7 @@ void vw_SendVertices_DisableStatesAndPointers(int DataFormat, unsigned int *VBO,
 		int TextQ = DataFormat & 0x000000F;
 		for (int i=TextQ-1; i>=0; i--)
 		{
-			if (glClientActiveTexture_ARB != 0) glClientActiveTexture_ARB(GL_TEXTURE0+i);
+			glClientActiveTexture(GL_TEXTURE0+i);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
 

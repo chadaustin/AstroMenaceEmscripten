@@ -40,8 +40,11 @@
 #endif
 
 #if defined(EMSCRIPTEN)
-        #include <GL/Regal.h>
+	#define __glext_h_  // Don't let gl.h include glext.h
+        #include <SDL/SDL_opengl.h>
+        //#include <GLES2/gl2.h>
         #include <GL/glu.h>
+        #undef __glext_h_
 #elif defined(__APPLE__) && defined(__MACH__)
 	#define __glext_h_  // Don't let gl.h include glext.h
 	#include <OpenGL/gl.h>	// Header File For The OpenGL Library

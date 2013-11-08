@@ -82,24 +82,6 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 
 	if (MipMap)
 	{	// используем по порядку наиболее новые решения при генерации мипмепов
-		if ((glGenerateMipmapEXT != NULL) && (glTexStorage2DEXT != NULL))
-		{
-			// считаем сколько нужно создавать мипмапов
-			int NeedMipMapLvl = 1;
-			int MaxSize = Width;
-			if (MaxSize < Height) MaxSize = Height;
-			while (MaxSize > 2) {MaxSize = MaxSize/2; NeedMipMapLvl++;};
-			glTexStorage2DEXT(GL_TEXTURE_2D, NeedMipMapLvl, InternalFormat, Width, Height);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, Width, Height, Format, GL_UNSIGNED_BYTE, ustDIB);
-			glGenerateMipmapEXT(GL_TEXTURE_2D);
-		}
-		else
-		if (glGenerateMipmapEXT != NULL)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, Format, GL_UNSIGNED_BYTE, ustDIB);
-			glGenerateMipmapEXT(GL_TEXTURE_2D);
-		}
-		else
 		if (OpenGL_DevCaps->HardwareMipMapGeneration)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);
@@ -113,15 +95,7 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 	}
 	else // без мипмепов
 	{
-		if (glTexStorage2DEXT != NULL)
-		{
-			glTexStorage2DEXT(GL_TEXTURE_2D, 1, InternalFormat, Width, Height);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, Width, Height, Format, GL_UNSIGNED_BYTE, ustDIB);
-		}
-		else
-		{
 			glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, Format, GL_UNSIGNED_BYTE, ustDIB);
-		}
 	}
 
 
@@ -138,7 +112,7 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 //------------------------------------------------------------------------------------
 void vw_BindTexture(DWORD Stage, GLuint TextureID)
 {
-	if (glActiveTextureARB != 0) glActiveTextureARB(GL_TEXTURE0 + Stage);
+	glActiveTexture(GL_TEXTURE0 + Stage);
 
 	if (TextureID != 0)
 	{

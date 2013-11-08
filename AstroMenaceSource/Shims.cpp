@@ -3,7 +3,6 @@
 #include <SDL.h>
 
 extern "C" {
-    /*
     void glPushAttrib(GLbitfield) {
     }
 
@@ -21,6 +20,13 @@ extern "C" {
     ) {
     }
 
+    void glLightfv(GLenum, GLenum, const GLfloat*) {
+    }
+
+    void glMaterialfv(GLenum, GLenum, const GLfloat*) {
+    }
+
+    /*
     GLint gluBuild2DMipmaps(GLenum  target,  GLint  internalFormat,  GLsizei  width,  GLsizei  height,  GLenum  format,  GLenum  type,  const void *  data) {
         return 1;        
     }
