@@ -236,8 +236,6 @@ LIBFREETYPE = [os.path.join('freetype', 'src', x) for x in Split("""
 libfreetype = env.Library(['freetype'], LIBFREETYPE)
 
 SOURCES = Split("""
-    deps/regal/src/glu/libutil/mipmap.c
-
     deps/SDL_rwops.c
     deps/SDL_malloc.c
     deps/SDL_error.c
@@ -267,7 +265,6 @@ SOURCES = Split("""
     AstroMenaceSource/Core/ParticleSystem2D/ParticleSystem2D.cpp
     AstroMenaceSource/Core/RendererInterface/OGL_Draw2D.cpp
     AstroMenaceSource/Core/RendererInterface/OGL_Draw3D.cpp
-    AstroMenaceSource/Core/RendererInterface/OGL_FBO.cpp
     AstroMenaceSource/Core/RendererInterface/OGL_GLSL.cpp
     AstroMenaceSource/Core/RendererInterface/OGL_Light.cpp
     AstroMenaceSource/Core/RendererInterface/OGL_Main.cpp
@@ -305,7 +302,6 @@ SOURCES = Split("""
     AstroMenaceSource/Game/Game_WeaponSlot.cpp
     AstroMenaceSource/GraphicFX/GameLvlText/GameLvlText.cpp
     AstroMenaceSource/GraphicFX/GameLvlText/GameLvlTextManager.cpp
-    AstroMenaceSource/GraphicFX/ShadowMap.cpp
     AstroMenaceSource/GraphicFX/SkyBox.cpp
     AstroMenaceSource/GraphicFX/SpaceStars/SpaceStars.cpp
     AstroMenaceSource/GraphicFX/SpaceStars/Star.cpp
