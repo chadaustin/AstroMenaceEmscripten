@@ -360,8 +360,6 @@ void vw_InitOpenGL(int Width, int Height, int *MSAA, int *CSAA)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	vw_ResizeScene(fAngleGL, (Width*1.0f)/(Height*1.0f), fNearClipGL, fFarClipGL);
 
-	glPixelStorei(GL_PACK_ALIGNMENT, 1);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	vw_SetClearColor(fClearRedGL, fClearGreenGL, fClearBlueGL, fClearAlphaGL);
 	glEnable(GL_CULL_FACE);

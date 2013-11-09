@@ -60,14 +60,15 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 	}
 
 
-	if (MipMap)
+	/*	if (MipMap)
 	{
             // делаем через glu...
             gluBuild2DMipmaps(GL_TEXTURE_2D, InternalFormat, Width, Height, Format, GL_UNSIGNED_BYTE, ustDIB);
 	}
-	else // без мипмепов
+	else*/ // без мипмепов
 	{
 			glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, Width, Height, 0, Format, GL_UNSIGNED_BYTE, ustDIB);
+			glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
 
