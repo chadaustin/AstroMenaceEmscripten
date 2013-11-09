@@ -50,12 +50,12 @@ GLuint vw_BuildTexture(BYTE *ustDIB, int Width, int Height, bool MipMap, int Byt
 		if (Bytes == 4)
 		{
 			Format = GL_RGBA;
-			InternalFormat = GL_RGBA8;
+			InternalFormat = GL_RGBA;
 		}
 		else
 		{	// считаем 4 слоя (фактически их задействуем)
 			Format = GL_RGB;
-			InternalFormat = GL_RGB8;
+			InternalFormat = GL_RGB;
 		}
 	}
 
