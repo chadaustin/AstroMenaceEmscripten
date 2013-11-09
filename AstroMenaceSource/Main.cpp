@@ -1050,7 +1050,6 @@ ReCreate:
 		{
 			// 100% держит наши шейдеры
 			Setup.UseGLSL = true;
-			Setup.ShadowMap = 2;
 			// немного больше ставим другие опции
 			Setup.MSAA = 2;
 			Setup.CSAA = 2;
@@ -1061,7 +1060,6 @@ ReCreate:
 		if (CAPS->ShaderModel >= 4.1f)
 		{
 			// немного больше ставим другие опции
-			Setup.ShadowMap = 5;
 			Setup.MSAA = 4;
 			Setup.CSAA = 4;
 			Setup.MaxPointLights = 6;
@@ -1072,7 +1070,6 @@ ReCreate:
 		Setup.MSAA = 0;
 		Setup.CSAA = 0;
 		Setup.UseGLSL = false;
-		Setup.ShadowMap = 0;
 #endif
 
 		// устанавливаем соотношение сторон по установленному разрешению экрана
@@ -1091,9 +1088,6 @@ ReCreate:
 			Setup.iAspectRatioHeight = 768;
 		}
 	}
-
-	// если не поддерживает железо фбо или шейдеры, выключаем шадовмеп
-	if (!CAPS->FramebufferObject || !CAPS->GLSL100Supported || (CAPS->ShaderModel < 3.0f)) Setup.ShadowMap = 0;
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// завершаем инициализацию

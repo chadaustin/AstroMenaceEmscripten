@@ -481,7 +481,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 		bool ShadowMap = false;
 
-		if (Setup.ShadowMap > 0)
+		if (0 > 0)
 		{
 			float EffectiveDistance = 20.0f;
 			ShadowMap_StartRenderToFBO(VECTOR3D(0,5,0), EffectiveDistance, EffectiveDistance*2);
@@ -507,7 +507,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 				SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
 		}
 
-		if (Setup.ShadowMap > 0)
+		if (0 > 0)
 		{
 			ShadowMap_EndFinalRender();
 		}
@@ -538,7 +538,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 		bool ShadowMap = false;
 
-		if (Setup.ShadowMap > 0)
+		if (0 > 0)
 		{
 			float EffectiveDistance = 20.0f;
 			ShadowMap_StartRenderToFBO(VECTOR3D(0,0,0), EffectiveDistance, EffectiveDistance*2);
@@ -564,7 +564,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 				SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
 		}
 
-		if (Setup.ShadowMap > 0)
+		if (0 > 0)
 		{
 			ShadowMap_EndFinalRender();
 		}
@@ -612,7 +612,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 	bool ShadowMap = false;
 
-	if (Setup.ShadowMap > 0)
+	if (0 > 0)
 	{
 		float EffectiveDistance = 20.0f;
 		ShadowMap_StartRenderToFBO(VECTOR3D(0,-2,0), EffectiveDistance, EffectiveDistance*2);
@@ -639,7 +639,7 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 			SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
 	}
 
-	if (Setup.ShadowMap > 0)
+	if (0 > 0)
 	{
 		ShadowMap_EndFinalRender();
 	}

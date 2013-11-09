@@ -1528,9 +1528,6 @@ void LoadGameData(int LoadType)
 		UniformLocations[29] = vw_GetUniformLocation(GLSLShaderType3, "NeedNormalMapping");
 		UniformLocations[30] = vw_GetUniformLocation(GLSLShaderType3, "PCFMode");
 	}
-	// еще одна проверка перед тем как будем использовать шадовмеп
-	// если не смогли загрузить шейдеры, то делать с шадовмеп нечего
-	if (!Setup.UseGLSL) Setup.ShadowMap = 0;
 
 
 	// инициализация менеджера частиц (обязательно после загрузки шейдеров)
@@ -1697,44 +1694,6 @@ void LoadGameData(int LoadType)
 
 
 AllDataLoaded:
-
-
-	// инициализируем шадов меп, делаем это постоянно т.к. у нас разные размеры карт для меню и игры
-	if (Setup.ShadowMap > 0)
-	{
-		int ShadowMapSize = 1024;
-		switch(Setup.ShadowMap)
-		{
-			case 1:
-			case 2:
-			case 3:
-					ShadowMapSize = CAPS->MaxTextureWidth/4; break;
-			case 4:
-			case 5:
-			case 6:
-					ShadowMapSize = CAPS->MaxTextureWidth/2; break;
-			case 7:
-			case 8:
-			case 9:
-					ShadowMapSize = CAPS->MaxTextureWidth; break;
-		}
-
-		switch(LoadType)
-		{
-			case -1:  // меню (только запустили)
-				if (!ShadowMap_Init(ShadowMapSize, ShadowMapSize/2)) Setup.ShadowMap = 0;
-				break;
-			case 0:   // меню (выходим из игры)
-				ShadowMap_Release();
-				if (!ShadowMap_Init(ShadowMapSize, ShadowMapSize/2)) Setup.ShadowMap = 0;
-				break;
-
-			case 1: // переход на уровни игры
-				ShadowMap_Release();
-				if (!ShadowMap_Init(ShadowMapSize, ShadowMapSize)) Setup.ShadowMap = 0;
-				break;
-		}
-	}
 
 
 	// переходим в нужное место...

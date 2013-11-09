@@ -265,8 +265,6 @@ struct GameSetup
 	int 	AnisotropyLevel;
 	// использование шейдеров
 	bool	UseGLSL;
-	// использование шадовмеп
-	int		ShadowMap;
 	// кол-во точечных источников света на 1 объект
 	int		MaxPointLights;
 

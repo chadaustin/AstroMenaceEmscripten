@@ -64,7 +64,6 @@ void InitSetup()
 	Setup.VisualEffectsQuality = 0;
 	Setup.AnisotropyLevel = 1;
 	Setup.UseGLSL = false;
-	Setup.ShadowMap = 0;
 	Setup.MaxPointLights = 3;
 	Setup.MusicSw = 8;
 	Setup.Music_check = true;
@@ -211,7 +210,6 @@ void SaveXMLSetupFile()
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "VisualEffectsQuality"), "value", Setup.VisualEffectsQuality);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "AnisotropyLevel"), "value", Setup.AnisotropyLevel);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "UseGLSL"), "value", Setup.UseGLSL);
-	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "ShadowMap"), "value", Setup.ShadowMap);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "MaxPointLights"), "value", Setup.MaxPointLights);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "MusicSw"), "value", Setup.MusicSw);
 	XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(RootXMLEntry, "SoundSw"), "value", Setup.SoundSw);
@@ -550,9 +548,6 @@ bool LoadXMLSetupFile(bool NeedSafeMode)
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "UseGLSL") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "UseGLSL"), "value") != 0)
 			Setup.UseGLSL = XMLdoc->bGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "UseGLSL"), "value");
-	if (XMLdoc->FindEntryByName(RootXMLEntry, "ShadowMap") != 0)
-		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "ShadowMap"), "value") != 0)
-			Setup.ShadowMap = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "ShadowMap"), "value");
 	if (XMLdoc->FindEntryByName(RootXMLEntry, "MaxPointLights") != 0)
 		if (XMLdoc->GetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "MaxPointLights"), "value") != 0)
 			Setup.MaxPointLights = XMLdoc->iGetEntryAttribute(XMLdoc->FindEntryByName(RootXMLEntry, "MaxPointLights"), "value");

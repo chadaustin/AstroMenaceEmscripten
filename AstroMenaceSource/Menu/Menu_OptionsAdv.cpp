@@ -382,7 +382,7 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 		Options_UseGLSL = !Options_UseGLSL;
 		// если выключены шейдеры - выключаем и тени
 		if (!Options_UseGLSL) Options_ShadowMap = 0;
-		else Options_ShadowMap = Setup.ShadowMap;
+		else Options_ShadowMap = 0;
 	}
 	if (CAPS->GLSL100Supported && (CAPS->ShaderModel >= 3.0))
 	{
@@ -490,7 +490,7 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 		Options_CSAA == Setup.CSAA &&
 		Options_UseGLSL == Setup.UseGLSL &&
 		Options_TexturesQuality == Setup.TexturesQuality &&
-		Options_ShadowMap == Setup.ShadowMap)
+		Options_ShadowMap == 0)
 	{
 		X = (Setup.iAspectRatioWidth - 384)/2;
 		Y = Y+Prir;
@@ -536,7 +536,7 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 				Options_CSAA != Setup.CSAA ||
 				Options_UseGLSL != Setup.UseGLSL ||
 				Options_TexturesQuality != Setup.TexturesQuality ||
-				Options_ShadowMap != Setup.ShadowMap)
+				Options_ShadowMap != 0)
 			{
 				if (GameStatus == GAME) SetCurrentDialogBox(18);
 				else
@@ -557,7 +557,6 @@ void SaveOptionsAdvMenuTmpData()
 	Setup.UseGLSL = Options_UseGLSL;
 	Setup.MSAA = Options_MSAA;
 	Setup.CSAA = Options_CSAA;
-	Setup.ShadowMap = Options_ShadowMap;
 	Setup.TexturesQuality = Options_TexturesQuality;
 }
 

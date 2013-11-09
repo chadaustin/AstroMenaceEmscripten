@@ -66,7 +66,7 @@ void DrawAllObject3D(int DrawType)
 
 	bool ShadowMap = false;
 
-	if (Setup.ShadowMap > 0)
+	if (0 > 0)
 	{
 		switch (DrawType)
 		{
@@ -103,7 +103,7 @@ void DrawAllObject3D(int DrawType)
 	DrawAllProjectile(false, ShadowMap);
 
 
-	if (Setup.ShadowMap > 0)
+	if (0 > 0)
 	{
 		ShadowMap_EndFinalRender();
 	}

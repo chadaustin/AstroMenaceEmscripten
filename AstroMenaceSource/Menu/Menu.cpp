@@ -255,7 +255,7 @@ void SetOptionsMenu(eGameStatus Menu)
 			Options_MSAA = Setup.MSAA;
 			Options_CSAA = Setup.CSAA;
 			Options_TexturesQuality = Setup.TexturesQuality;
-			Options_ShadowMap = Setup.ShadowMap;
+			Options_ShadowMap = 0;
 			break;
 
 		case CONFCONTROL:
