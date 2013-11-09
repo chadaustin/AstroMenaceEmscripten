@@ -298,13 +298,6 @@ void vw_SetTextureAnisotropy(int AnisotropyLevel)
 	// ставим ANISOTROPY
 	if (AnisotropyLevel > 1)
 	{
-		eDevCaps *OpenGL_DevCaps = vw_GetDevCaps();
-
-		if (OpenGL_DevCaps->MaxAnisotropyLevel > 1)
-		{
-			if (AnisotropyLevel > OpenGL_DevCaps->MaxAnisotropyLevel) AnisotropyLevel = OpenGL_DevCaps->MaxAnisotropyLevel;
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, AnisotropyLevel);
-		}
 	}
 }
 

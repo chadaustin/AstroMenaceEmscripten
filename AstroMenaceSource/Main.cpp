@@ -1053,7 +1053,6 @@ ReCreate:
 			// немного больше ставим другие опции
 			Setup.MSAA = 2;
 			Setup.CSAA = 2;
-			Setup.AnisotropyLevel = CAPS->MaxAnisotropyLevel;
 			Setup.MaxPointLights = 4;
 		}
 		// если шейдерная модель 4.1-я или выше

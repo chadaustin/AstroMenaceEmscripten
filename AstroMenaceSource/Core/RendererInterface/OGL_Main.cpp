@@ -231,7 +231,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	OpenGL_DevCaps.MaxTextureWidth = 0;
 	OpenGL_DevCaps.MaxTextureHeight = 0;
 	OpenGL_DevCaps.MaxActiveLights = 0;
-	OpenGL_DevCaps.MaxAnisotropyLevel = 0;
 	OpenGL_DevCaps.GLSL100Supported = false;
 	OpenGL_DevCaps.ShaderModel = 0;
 	OpenGL_DevCaps.FramebufferObject = false;
@@ -268,18 +267,6 @@ int vw_InitWindow(const char* Title, int Width, int Height, int *Bits, BOOL Full
 	printf("Max multitexture supported: %i textures.\n", OpenGL_DevCaps.MaxMultTextures);
 	// shader-based GL 2.0 and above programs should use GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS only
 
-
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// смотрим остальные поддерживаемые функции
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-	// проверем поддержку анизотропной фильтрации
-	if (ExtensionSupported("GL_EXT_texture_filter_anisotropic"))
-	{
-		// получим максимально доступный угол анизотропии...
-		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,&OpenGL_DevCaps.MaxAnisotropyLevel);
-		printf("Max anisotropy: %i\n", OpenGL_DevCaps.MaxAnisotropyLevel);
-	}
 
 	// проверяем, есть ли поддержка GL_ARB_framebuffer_object (GL_EXT_framebuffer_object+GL_EXT_framebuffer_multisample+GL_EXT_framebuffer_blit)
 	if (ExtensionSupported("GL_ARB_framebuffer_object") ||

@@ -48,8 +48,6 @@ struct eDevCaps
 	int MaxTextureHeight;
 	// макс. кол-во одновременно обрабатываемых источников света
 	int MaxActiveLights;
-	// максимальный уровень анизотропии
-	int MaxAnisotropyLevel;
 	// поддержка FBO
 	bool FramebufferObject;
 	// глубина depth буфера в битах, получаем ее при первой генерации fbo с буфером глубины, по умолчанию 0

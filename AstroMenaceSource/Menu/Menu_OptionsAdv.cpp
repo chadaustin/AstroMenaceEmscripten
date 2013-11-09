@@ -231,25 +231,21 @@ void OptionsAdvMenu(float ContentTransp, float *ButtonTransp1, float *LastButton
 	// анизотропия
 	Y1 += Prir1;
 	vw_DrawFont(X1, Y1, -280, 0, 1.0f, 0.0f,1.0f,0.0f, ContentTransp, vw_GetText("3_Anisotropy_Level"));
-	if (DrawButton128_2(X1+300, Y1-6, vw_GetText("1_Prev"), ContentTransp, Setup.AnisotropyLevel==1))
+	if (DrawButton128_2(X1+300, Y1-6, vw_GetText("1_Prev"), ContentTransp, 1==1))
 	{
-		Setup.AnisotropyLevel = (int)(Setup.AnisotropyLevel/2);
-		if (Setup.AnisotropyLevel < 1) Setup.AnisotropyLevel = 1;
 	}
-	if (DrawButton128_2(X1+616, Y1-6, vw_GetText("1_Next"), ContentTransp, Setup.AnisotropyLevel==CAPS->MaxAnisotropyLevel))
+	if (DrawButton128_2(X1+616, Y1-6, vw_GetText("1_Next"), ContentTransp, 1==1))
 	{
-		Setup.AnisotropyLevel = Setup.AnisotropyLevel*2;
-		if (Setup.AnisotropyLevel > CAPS->MaxAnisotropyLevel) Setup.AnisotropyLevel = CAPS->MaxAnisotropyLevel;
 	}
-	if (Setup.AnisotropyLevel>1)
+	if (1>1)
 	{
-		Size = vw_FontSize("x%i", Setup.AnisotropyLevel);
+		Size = vw_FontSize("x%i", 1);
 		SizeI = (170-Size)/2;
-		vw_DrawFont(X1+438+SizeI, Y1, 0, 0, 1.0f, 1.0f,1.0f,1.0f, ContentTransp, "x%i",Setup.AnisotropyLevel);
+		vw_DrawFont(X1+438+SizeI, Y1, 0, 0, 1.0f, 1.0f,1.0f,1.0f, ContentTransp, "x%i",1);
 	}
 	else
 	{
-		if (CAPS->MaxAnisotropyLevel > 1)
+		if (1 > 1)
 		{
 			Size = vw_FontSize(vw_GetText("1_Off"));
 			SizeI = (170-Size)/2;

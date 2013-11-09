@@ -970,7 +970,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 	if (NeedOnePieceDraw)
 	{
 		vw_SetTexture(0, Texture[0]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+		vw_SetTextureAnisotropy(1);
 		// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 		if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 
@@ -980,7 +980,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 		{
 			// свечение
 			vw_SetTexture(1, TextureIllum[0]);
-			vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+			vw_SetTextureAnisotropy(1);
 			// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 			if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 			// для корректной прорисовки без шейдеров, ставим правильный режим смешивания
@@ -997,7 +997,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 			NeedNormalMapping = 1;
 			CurrentNormalMap = NormalMap[0];
 			vw_SetTexture(3, CurrentNormalMap);
-			vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+			vw_SetTextureAnisotropy(1);
 			// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 			if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 		}
@@ -1140,7 +1140,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 			if (CurrentText != Texture[i])
 			{
 				vw_SetTexture(0, Texture[i]);
-				vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+				vw_SetTextureAnisotropy(1);
 				// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 				if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 
@@ -1161,7 +1161,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 				{
 					// свечение
 					vw_SetTexture(1, TextureIllum[i]);
-					vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+					vw_SetTextureAnisotropy(1);
 					// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 					if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 					// для корректной прорисовки без шейдеров, ставим правильный режим смешивания
@@ -1179,7 +1179,7 @@ void CObject3D::Draw(bool VertexOnlyPass, bool ShadowMap)
 						NeedNormalMapping = 1;
 						CurrentNormalMap = NormalMap[i];
 						vw_SetTexture(3, CurrentNormalMap);
-						vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
+						vw_SetTextureAnisotropy(1);
 						// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 						if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 					}

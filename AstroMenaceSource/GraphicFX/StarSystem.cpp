@@ -283,7 +283,6 @@ void StarSystemDraw(int DrawType)
 
 		eTexture *TileTexture = vw_FindTextureByName("DATA/SKYBOX/tile_back.tga");
 		vw_SetTexture(0, TileTexture);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 		if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 
@@ -475,7 +474,6 @@ void StarSystemDrawSecondLayer(int DrawType)
 
 		eTexture *TileTexture = vw_FindTextureByName("DATA/SKYBOX/tile_stars.tga");
 		vw_SetTexture(0, TileTexture);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 		if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 

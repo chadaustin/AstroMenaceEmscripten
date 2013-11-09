@@ -64,7 +64,6 @@ void SkyBoxDraw(void)
 	// сразу выполняем настройку второй текстуры
 	vw_SetTexture(1, vw_FindTextureByName("DATA/SKYBOX/tile_stars.tga"));
 	vw_SetTextureEnvMode(RI_TENV_DECAL);
-	vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 	// по умолчанию всегда трилинейная фильтрация, если надо - ставим билинейную
 	if (Setup.TextureFilteringMode == 1) vw_SetTextureFiltering(RI_TEXTURE_BILINEAR);
 	// корректируем текстурные координаты для второй текстуры через матрицу
@@ -103,7 +102,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 1.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[BACK]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 	}
 
@@ -136,7 +134,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 1.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[FRONT]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 
 	}
@@ -170,7 +167,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 1.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[BOTTOM]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 	}
 
@@ -203,7 +199,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 0.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[TOP]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 	}
 
@@ -236,7 +231,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 0.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[LEFT]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 	}
 
@@ -269,7 +263,6 @@ void SkyBoxDraw(void)
 		buff[k++] = 1.0f;
 
 		vw_SetTexture(0, SkyBox_Texture[RIGHT]);
-		vw_SetTextureAnisotropy(Setup.AnisotropyLevel);
 		vw_SendVertices(RI_TRIANGLE_STRIP, 4, VFV, buff, 5*sizeof(float));
 	}
 
