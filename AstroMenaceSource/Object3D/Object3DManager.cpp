@@ -66,31 +66,6 @@ void DrawAllObject3D(int DrawType)
 
 	bool ShadowMap = false;
 
-	if (0 > 0)
-	{
-		switch (DrawType)
-		{
-			// меню
-			case 1: ShadowMap_StartRenderToFBO(VECTOR3D(50,-5,-120), 120.0f, 500.0f); break;
-			// игра
-			case 2: ShadowMap_StartRenderToFBO(VECTOR3D(0,0,160), 600.0f, 800.0f); break;
-		}
-
-		DrawAllSpaceShip(true, 0);
-		DrawAllWeapon(true, 0);
-		DrawAllGroundObject(true, 0);
-		DrawAllProjectile(true, 0);
-		DrawAllExplosion(true);
-		DrawAllSpaceObject(true, 0);
-
-		ShadowMap_EndRenderToFBO();
-
-		// работаем с 3-м стейджем текстур (первые два у нас заняты)
-		ShadowMap = true;
-		ShadowMap_StartFinalRender();
-	}
-
-
 	// космические объекты
 	DrawAllSpaceObject(false, ShadowMap);
 	// корабли
@@ -101,12 +76,6 @@ void DrawAllObject3D(int DrawType)
 	DrawAllGroundObject(false, ShadowMap);
 	// снаряды
 	DrawAllProjectile(false, ShadowMap);
-
-
-	if (0 > 0)
-	{
-		ShadowMap_EndFinalRender();
-	}
 
 	// взрывы
 	DrawAllExplosion(false);

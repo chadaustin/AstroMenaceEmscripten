@@ -481,35 +481,12 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 		bool ShadowMap = false;
 
-		if (0 > 0)
-		{
-			float EffectiveDistance = 20.0f;
-			ShadowMap_StartRenderToFBO(VECTOR3D(0,5,0), EffectiveDistance, EffectiveDistance*2);
-
-			SpaceFighter->Draw(true);
-			if (SpaceFighter->Weapon != 0)
-			for (int i=0; i<SpaceFighter->WeaponQuantity; i++)
-			{
-				if (SpaceFighter->Weapon[i] != 0)
-					SpaceFighter->Weapon[i]->Draw(true);
-			}
-
-			ShadowMap_EndRenderToFBO();
-			ShadowMap = true;
-			ShadowMap_StartFinalRender();
-		}
-
 		SpaceFighter->Draw(false, ShadowMap);
 		if (SpaceFighter->Weapon != 0)
 		for (int i=0; i<SpaceFighter->WeaponQuantity; i++)
 		{
 			if (SpaceFighter->Weapon[i] != 0)
 				SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
-		}
-
-		if (0 > 0)
-		{
-			ShadowMap_EndFinalRender();
 		}
 
 		// рисуем эффекты двигателей только для этой модели
@@ -538,35 +515,12 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 		bool ShadowMap = false;
 
-		if (0 > 0)
-		{
-			float EffectiveDistance = 20.0f;
-			ShadowMap_StartRenderToFBO(VECTOR3D(0,0,0), EffectiveDistance, EffectiveDistance*2);
-
-			SpaceFighter->Draw(true);
-			if (SpaceFighter->Weapon != 0)
-			for (int i=0; i<SpaceFighter->WeaponQuantity; i++)
-			{
-				if (SpaceFighter->Weapon[i] != 0)
-					SpaceFighter->Weapon[i]->Draw(true);
-			}
-
-			ShadowMap_EndRenderToFBO();
-			ShadowMap = true;
-			ShadowMap_StartFinalRender();
-		}
-
 		SpaceFighter->Draw(false, ShadowMap);
 		if (SpaceFighter->Weapon != 0)
 		for (int i=0; i<SpaceFighter->WeaponQuantity; i++)
 		{
 			if (SpaceFighter->Weapon[i] != 0)
 				SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
-		}
-
-		if (0 > 0)
-		{
-			ShadowMap_EndFinalRender();
 		}
 
 		// рисуем эффекты двигателей только для этой модели
@@ -612,24 +566,6 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 
 	bool ShadowMap = false;
 
-	if (0 > 0)
-	{
-		float EffectiveDistance = 20.0f;
-		ShadowMap_StartRenderToFBO(VECTOR3D(0,-2,0), EffectiveDistance, EffectiveDistance*2);
-
-		SpaceFighter->Draw(true);
-		if (SpaceFighter->Weapon != 0)
-		for (int i=0; i<SpaceFighter->WeaponQuantity; i++)
-		{
-			if (SpaceFighter->Weapon[i] != 0)
-				SpaceFighter->Weapon[i]->Draw(true);
-		}
-
-		ShadowMap_EndRenderToFBO();
-		ShadowMap = true;
-		ShadowMap_StartFinalRender();
-	}
-
 	SpaceFighter->Draw(false, ShadowMap);
 
 	if (SpaceFighter->Weapon != 0)
@@ -637,11 +573,6 @@ void WorkshopDrawShip(CEarthSpaceFighter *SpaceFighter, int Mode)
 	{
 		if (SpaceFighter->Weapon[i] != 0)
 			SpaceFighter->Weapon[i]->Draw(false, ShadowMap);
-	}
-
-	if (0 > 0)
-	{
-		ShadowMap_EndFinalRender();
 	}
 
 	// рисуем эффекты двигателей только для этой модели

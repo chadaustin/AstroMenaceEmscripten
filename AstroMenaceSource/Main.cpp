@@ -1027,10 +1027,6 @@ ReCreate:
 	CAPS->FramebufferObject = false;
 	printf("Frame Buffer Object support forced disabled.\n");
 #endif
-	if (Setup.FBOCoreMode == 0)
-	{
-		CAPS->FramebufferObject = false;
-	}
 
 	// проверка поддержки шейдеров (нужна 100% поддержка GLSL 1.0)
 	if (Setup.UseGLSL)
@@ -1331,7 +1327,6 @@ GotoQuit:
 
 	vw_ReleaseAllFontChars(); // (!) всегда перед vw_ReleaseAllTextures
 	vw_ReleaseAllTextures();
-	ShadowMap_Release();
 	vw_ShutdownRenderer();
 
 	// полностью выходим из SDL

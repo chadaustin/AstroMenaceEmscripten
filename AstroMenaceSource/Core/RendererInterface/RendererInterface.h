@@ -48,11 +48,6 @@ struct eDevCaps
 	int MaxTextureHeight;
 	// макс. кол-во одновременно обрабатываемых источников света
 	int MaxActiveLights;
-	// поддержка FBO
-	bool FramebufferObject;
-	// глубина depth буфера в битах, получаем ее при первой генерации fbo с буфером глубины, по умолчанию 0
-	// если работаем с fbo, то еще на этапе инициализации основного fbo прорисовки будут получены данные максимально поддерживаемой глубины
-	int FramebufferObjectDepthSize;
 	// поддержка шейдеров GLSL 1.00
 	bool GLSL100Supported;
 	// шейдерная модель
@@ -444,43 +439,6 @@ bool vw_BuildVAO(unsigned int *VAO, int NumVertices, int DataFormat, void *Data,
 void vw_BindVAO(unsigned int VAO);
 // удаляем
 void vw_DeleteVAO(unsigned int VAO);
-
-
-
-
-
-
-
-// FBO
-
-// структура FBO
-struct eFBO
-{
-	unsigned int 	ColorBuffer;
-	unsigned int 	DepthBuffer;
-	unsigned int 	ColorTexture;
-	unsigned int 	DepthTexture;
-	int				DepthSize;
-	unsigned int 	FrameBufferObject;
-	unsigned int 	Width;
-	unsigned int 	Height;
-};
-
-// создаем (FBO - уже заранее подготовленный объект, в функции память не выделяем)
-bool vw_BuildFBO(eFBO *FBO, int Width, int Height, bool NeedColor, bool NeedDepth, int MSAA=0, int *CSAA=0);
-// устанавливаем
-void vw_BindFBO(eFBO *FBO);
-// получаем текущий установленный FBO, 0 - если фрейм буфер
-eFBO *vw_GetCurrentFBO();
-// блит цветовой составляющей фбо источника в фбо приемник (нужно для вывода фбо с мультисемплами)
-void vw_BlitFBO(eFBO *SourceFBO, eFBO *TargetFBO);
-// рисуем цветовую текстуру источника, на весь приемник, если 0 - во фрейм буфер
-void vw_DrawColorFBO(eFBO *SourceFBO, eFBO *TargetFBO);
-// удаление данных в структуре
-void vw_DeleteFBO(eFBO *FBO);
-
-
-
 
 
 
